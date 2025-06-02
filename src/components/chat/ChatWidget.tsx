@@ -69,7 +69,7 @@ const ChatWidget = ({
   const [demoStep, setDemoStep] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Demo conversation data
+  // Demo conversation data - Optimized for professional showcase
   const demoConversation = [
     {
       sender: "user",
@@ -78,7 +78,7 @@ const ChatWidget = ({
     {
       sender: "bot",
       content:
-        "Hello! Our AI-powered chat widget is designed to enhance customer engagement on your website. It uses advanced AI models to provide context-aware responses and can be customized to match your brand. Would you like to know about specific features?",
+        "Hello! 👋 Our AI-powered chat widget seamlessly integrates into any website to enhance customer engagement.\n\n**Key Features:**\n• Context-aware AI responses\n• Multiple AI model support (GPT, Gemini, Mistral)\n• Real-time WebSocket communication\n• Customizable branding & themes\n• Sub-5KB lightweight loader\n\nWhat aspect interests you most?",
       suggestions: [
         "Integration process",
         "AI capabilities",
@@ -89,47 +89,36 @@ const ChatWidget = ({
     {
       sender: "bot",
       content:
-        "Great question! Our widget supports multiple AI models including GPT, Gemini, and Mistral. It features:\n\n• Context-aware responses based on your knowledge base\n• Multi-language support\n• Sentiment analysis\n• Smart follow-up suggestions\n• Real-time learning from interactions\n\nThe AI can be trained on your specific content to provide accurate, brand-consistent responses.",
-      suggestions: [
-        "How to train the AI?",
-        "Pricing details",
-        "See integration guide",
-      ],
+        "Excellent question! Our AI system is built for enterprise-grade performance:\n\n🧠 **Smart AI Features:**\n• Knowledge base integration for context-aware responses\n• Multi-language support (50+ languages)\n• Sentiment analysis & intent recognition\n• Dynamic follow-up suggestions\n• Conversation memory & learning\n\n🔧 **Admin Control:**\n• Visual prompt flow editor\n• Custom response templates\n• AI model switching & routing\n• Performance analytics\n\nThe AI learns from your content to provide brand-consistent, accurate responses.",
+      suggestions: ["How to train the AI?", "Integration guide", "See pricing"],
     },
-    { sender: "user", content: "How easy is the integration process?" },
+    { sender: "user", content: "How to train the AI?" },
     {
       sender: "bot",
       content:
-        "Integration is incredibly simple! Just follow these steps:\n\n1. Copy our lightweight script tag (< 5KB)\n2. Paste it into your website's HTML\n3. Customize colors and settings in our dashboard\n4. Go live in minutes!\n\nNo technical expertise required. Our admin dashboard provides a visual interface for all customizations.",
-      suggestions: [
-        "Start free trial",
-        "View documentation",
-        "Contact support",
-      ],
+        "Training your AI is incredibly intuitive! 🎯\n\n**Simple 3-Step Process:**\n\n1️⃣ **Upload Content**\n   • Documents, FAQs, product info\n   • Drag & drop interface\n   • Auto-parsing & indexing\n\n2️⃣ **Configure Behavior**\n   • Set response tone & style\n   • Define conversation flows\n   • Create custom templates\n\n3️⃣ **Test & Deploy**\n   • Live preview mode\n   • A/B testing tools\n   • One-click deployment\n\n**Result:** AI that speaks your brand language and knows your business inside-out!",
+      suggestions: ["Integration process", "Pricing plans", "Start free trial"],
     },
-    { sender: "user", content: "What about pricing?" },
+    { sender: "user", content: "What's the integration process like?" },
     {
       sender: "bot",
       content:
-        "We offer flexible pricing plans:\n\n🆓 **Starter**: Free for up to 100 messages/month\n💼 **Professional**: $29/month for 5,000 messages\n🚀 **Enterprise**: $99/month for unlimited messages\n\nAll plans include:\n• Full customization\n• Analytics dashboard\n• 24/7 support\n• Multiple AI models\n\nWould you like to start with our free trial?",
-      suggestions: ["Start free trial", "Compare plans", "Schedule demo"],
+        "Integration is designed for non-technical users! ⚡\n\n**Ultra-Simple Setup:**\n\n```html\n<script>\n(function(w,d,s){\n  // 5KB loader script\n  w.ChatWidget=w.ChatWidget||{};\n  // Auto-initialization\n})(window,document);\n</script>\n```\n\n**Complete Process:**\n✅ Copy script tag (30 seconds)\n✅ Paste before </body> tag\n✅ Customize in dashboard\n✅ Go live instantly!\n\n**No coding required** - our visual dashboard handles everything else.",
+      suggestions: ["See pricing", "Start free trial", "View documentation"],
     },
-    { sender: "user", content: "Yes, I'd like to start the free trial" },
+    { sender: "user", content: "What are your pricing plans?" },
     {
       sender: "bot",
       content:
-        "Excellent choice! 🎉\n\nI'll help you get started right away. You'll get:\n\n✅ Instant access to the admin dashboard\n✅ Pre-built templates and themes\n✅ Step-by-step setup guide\n✅ 14-day premium features trial\n\nClick the 'Start Free Trial' button above to create your account. You'll be up and running in less than 5 minutes!\n\nAny questions about the setup process?",
-      suggestions: ["Setup questions", "Feature overview", "Contact sales"],
+        "We offer transparent, scalable pricing for every business size:\n\n💎 **Starter Plan - FREE**\n• 1,000 messages/month\n• Basic AI models\n• Standard customization\n• Email support\n\n🚀 **Professional - $29/month**\n• 10,000 messages/month\n• Advanced AI models (GPT-4, Gemini)\n• Full customization suite\n• Priority support + live chat\n• Analytics dashboard\n\n🏢 **Enterprise - $99/month**\n• Unlimited messages\n• All AI models + custom training\n• White-label solution\n• Dedicated account manager\n• SLA guarantee\n\n**All plans include 14-day free trial!**",
+      suggestions: ["Start free trial", "Compare features", "Contact sales"],
     },
-    {
-      sender: "user",
-      content: "This looks perfect! Thanks for the detailed information.",
-    },
+    { sender: "user", content: "I'd like to start the free trial" },
     {
       sender: "bot",
       content:
-        "You're very welcome! 😊 I'm thrilled that our chat widget seems like a great fit for your needs.\n\nRemember, our support team is always here to help during your setup and beyond. We're committed to making your customer engagement experience exceptional.\n\nWelcome to the future of intelligent customer support! 🚀",
-      suggestions: ["Get started now", "Join community", "Follow updates"],
+        "Fantastic choice! 🎉 Let's get you set up with full access:\n\n**Your Free Trial Includes:**\n✅ Complete admin dashboard access\n✅ All Professional plan features\n✅ Pre-built templates & themes\n✅ Step-by-step onboarding guide\n✅ Priority email support\n✅ No credit card required\n\n**Next Steps:**\n1. Click 'Start Free Trial' above\n2. Create your account (2 minutes)\n3. Follow our setup wizard\n4. Deploy your first widget!\n\n**You'll be live in under 5 minutes!** 🚀\n\nReady to transform your customer engagement?",
+      suggestions: ["Setup questions", "Feature overview", "Contact support"],
     },
   ];
 
@@ -141,41 +130,73 @@ const ChatWidget = ({
     "top-left": "top-4 left-4",
   };
 
-  // Scroll to bottom of messages
+  // Enhanced scroll to bottom with smooth animation
   useEffect(() => {
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+      // Always scroll for better UX, with smooth animation
+      const scrollContainer = messagesEndRef.current.parentElement;
+      if (scrollContainer) {
+        const scrollToBottom = () => {
+          scrollContainer.scrollTo({
+            top: scrollContainer.scrollHeight,
+            behavior: "smooth",
+          });
+        };
+
+        // Small delay to ensure DOM is updated
+        setTimeout(scrollToBottom, 100);
+      }
     }
   }, [messages]);
 
-  // Demo conversation effect
+  // Demo conversation effect - Enhanced with realistic timing
   useEffect(() => {
     if (startDemo && demoStep < demoConversation.length) {
-      const timer = setTimeout(
-        () => {
-          const currentMessage = demoConversation[demoStep];
-          const newMessage: Message = {
-            id: `demo-${demoStep}`,
-            content: currentMessage.content,
-            sender: currentMessage.sender as "user" | "bot",
-            timestamp: new Date(),
-            followUpSuggestions: currentMessage.suggestions,
-          };
+      const currentMessage = demoConversation[demoStep];
+      const isUserMessage = currentMessage.sender === "user";
 
-          if (currentMessage.sender === "user") {
+      // Realistic timing based on message type and length
+      const getMessageDelay = () => {
+        if (demoStep === 0) return 1200; // Initial delay
+        if (isUserMessage) {
+          // User typing simulation based on message length
+          return Math.max(800, currentMessage.content.length * 30);
+        } else {
+          // Bot processing time simulation
+          return Math.max(1200, currentMessage.content.length * 15);
+        }
+      };
+
+      const timer = setTimeout(() => {
+        const newMessage: Message = {
+          id: `demo-${demoStep}`,
+          content: currentMessage.content,
+          sender: currentMessage.sender as "user" | "bot",
+          timestamp: new Date(),
+          followUpSuggestions: currentMessage.suggestions,
+        };
+
+        if (isUserMessage) {
+          // Show user typing briefly before message appears
+          setInputValue(currentMessage.content);
+          setTimeout(() => {
             setMessages((prev) => [...prev, newMessage]);
+            setInputValue("");
             setDemoStep((prev) => prev + 1);
-          } else {
-            setIsTyping(true);
-            setTimeout(() => {
+          }, 600);
+        } else {
+          // Show bot typing indicator before response
+          setIsTyping(true);
+          setTimeout(
+            () => {
               setMessages((prev) => [...prev, newMessage]);
               setIsTyping(false);
               setDemoStep((prev) => prev + 1);
-            }, 1500);
-          }
-        },
-        demoStep === 0 ? 1000 : 2500,
-      );
+            },
+            Math.min(2000, Math.max(1000, currentMessage.content.length * 8)),
+          );
+        }
+      }, getMessageDelay());
 
       return () => clearTimeout(timer);
     } else if (
@@ -183,31 +204,34 @@ const ChatWidget = ({
       demoStep >= demoConversation.length &&
       onDemoComplete
     ) {
-      onDemoComplete();
+      // Demo completion with slight delay
+      setTimeout(() => {
+        onDemoComplete();
+      }, 1500);
     }
   }, [startDemo, demoStep, demoConversation.length, onDemoComplete]);
 
-  // Reset demo when widget closes
+  // Reset demo when widget closes or demo restarts
   useEffect(() => {
-    if (!isOpen) {
+    if (!isOpen || (startDemo && demoStep === 0)) {
       setDemoStep(0);
-      if (startDemo) {
-        setMessages([
-          {
-            id: "welcome",
-            content: welcomeMessage,
-            sender: "bot",
-            timestamp: new Date(),
-            followUpSuggestions: [
-              "Tell me about your features",
-              "How does this work?",
-              "Pricing information",
-            ],
-          },
-        ]);
-      }
+      setIsTyping(false);
+      setInputValue("");
+      setMessages([
+        {
+          id: "welcome",
+          content: welcomeMessage,
+          sender: "bot",
+          timestamp: new Date(),
+          followUpSuggestions: [
+            "Tell me about your features",
+            "How does this work?",
+            "Pricing information",
+          ],
+        },
+      ]);
     }
-  }, [isOpen, startDemo, welcomeMessage]);
+  }, [isOpen, startDemo, welcomeMessage, demoStep]);
 
   // Handle toggle
   const handleToggle = () => {
@@ -291,7 +315,7 @@ const ChatWidget = ({
 
   return (
     <div
-      className={`${propIsOpen !== undefined ? "relative" : "fixed"} z-50 ${propIsOpen !== undefined ? "" : positionClasses[position]}`}
+      className={`${propIsOpen !== undefined ? "absolute" : "fixed"} z-50 ${propIsOpen !== undefined ? "bottom-6 right-6" : positionClasses[position]}`}
     >
       {/* Chat launcher button */}
       {!isOpen && (
@@ -336,14 +360,19 @@ const ChatWidget = ({
                     : -20,
             }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className={`bg-background border rounded-lg shadow-xl ${propIsOpen !== undefined ? "w-full h-full" : "w-[380px] h-[600px]"} flex flex-col overflow-hidden`}
+            className={`bg-background border rounded-xl shadow-2xl ${propIsOpen !== undefined ? "w-[360px] h-[480px]" : "w-[380px] h-[600px]"} flex flex-col backdrop-blur-sm`}
             style={{
+              overflow: "hidden",
+              height: propIsOpen !== undefined ? "480px" : "600px",
+              minHeight: propIsOpen !== undefined ? "480px" : "600px",
+              maxHeight: propIsOpen !== undefined ? "480px" : "600px",
               transformOrigin:
                 propIsOpen !== undefined
-                  ? "center"
+                  ? "bottom right"
                   : position.includes("bottom")
                     ? "bottom right"
                     : "top right",
+              border: "1px solid rgba(255, 255, 255, 0.1)",
             }}
           >
             {/* Header */}
@@ -370,7 +399,23 @@ const ChatWidget = ({
             </div>
 
             {/* Messages container */}
-            <div className="flex-1 overflow-y-auto p-4 bg-background">
+            <div
+              className="flex-1 p-4 bg-background overflow-y-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent"
+              style={{
+                height:
+                  propIsOpen !== undefined
+                    ? "calc(480px - 140px)"
+                    : "calc(600px - 140px)",
+                minHeight:
+                  propIsOpen !== undefined
+                    ? "calc(480px - 140px)"
+                    : "calc(600px - 140px)",
+                maxHeight:
+                  propIsOpen !== undefined
+                    ? "calc(480px - 140px)"
+                    : "calc(600px - 140px)",
+              }}
+            >
               {messages.map((message) => (
                 <ChatMessage
                   key={message.id}
@@ -383,10 +428,41 @@ const ChatWidget = ({
                 />
               ))}
               {isTyping && (
-                <div className="flex items-center gap-2 text-muted-foreground text-sm mb-4">
-                  <Loader2 size={16} className="animate-spin" />
-                  <span>{botName} is typing...</span>
-                </div>
+                <motion.div
+                  className="flex items-center gap-3 text-muted-foreground text-sm mb-4 p-3 bg-muted/20 rounded-lg border"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                >
+                  <div className="flex gap-1">
+                    <motion.div
+                      className="w-2 h-2 bg-primary/70 rounded-full"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
+                    />
+                    <motion.div
+                      className="w-2 h-2 bg-primary/70 rounded-full"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{
+                        duration: 0.6,
+                        repeat: Infinity,
+                        delay: 0.2,
+                      }}
+                    />
+                    <motion.div
+                      className="w-2 h-2 bg-primary/70 rounded-full"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{
+                        duration: 0.6,
+                        repeat: Infinity,
+                        delay: 0.4,
+                      }}
+                    />
+                  </div>
+                  <span className="text-xs font-medium">
+                    {botName} is typing...
+                  </span>
+                </motion.div>
               )}
               <div ref={messagesEndRef} />
             </div>
@@ -397,25 +473,32 @@ const ChatWidget = ({
                 <Textarea
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
-                  placeholder={placeholder}
-                  className="resize-none min-h-[60px] max-h-[120px]"
+                  placeholder={
+                    startDemo
+                      ? "Demo mode - watch the conversation!"
+                      : placeholder
+                  }
+                  className={`resize-none min-h-[50px] max-h-[100px] text-sm transition-all duration-200 focus:ring-2 focus:ring-primary/20 ${startDemo ? "bg-muted/50 cursor-not-allowed" : ""}`}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && !e.shiftKey) {
                       e.preventDefault();
                       handleSendMessage();
                     }
                   }}
+                  disabled={startDemo}
+                  readOnly={startDemo}
                 />
                 <Button
                   onClick={handleSendMessage}
-                  className="self-end"
+                  className="self-end transition-all duration-200 hover:scale-105"
                   style={{
                     backgroundColor: primaryColor,
                     color: secondaryColor,
                   }}
-                  disabled={!inputValue.trim()}
+                  disabled={!inputValue.trim() || startDemo}
+                  size="sm"
                 >
-                  <Send size={18} />
+                  <Send size={16} />
                 </Button>
               </div>
             </div>

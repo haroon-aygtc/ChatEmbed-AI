@@ -8,10 +8,37 @@ import { motion } from "framer-motion";
 export function HeroSection() {
   const [isWidgetOpen, setIsWidgetOpen] = useState(false);
   const [startDemo, setStartDemo] = useState(false);
+  const [demoState, setDemoState] = useState<
+    "idle" | "starting" | "running" | "completed"
+  >("idle");
 
   const handleWatchDemo = () => {
-    setIsWidgetOpen(true);
-    setStartDemo(true);
+    if (demoState === "idle" || demoState === "completed") {
+      setDemoState("starting");
+      setIsWidgetOpen(true);
+      // Small delay to ensure widget opens smoothly before starting demo
+      setTimeout(() => {
+        setStartDemo(true);
+        setDemoState("running");
+      }, 800);
+    }
+  };
+
+  const handleDemoComplete = () => {
+    setStartDemo(false);
+    setDemoState("completed");
+    // Auto-reset after 3 seconds for re-watching
+    setTimeout(() => {
+      setDemoState("idle");
+    }, 3000);
+  };
+
+  const handleWidgetToggle = (open: boolean) => {
+    setIsWidgetOpen(open);
+    if (!open) {
+      setStartDemo(false);
+      setDemoState("idle");
+    }
   };
 
   return (
@@ -55,11 +82,31 @@ export function HeroSection() {
               <Button
                 size="lg"
                 variant="outline"
-                className="text-base px-8"
+                className="text-base px-8 transition-all duration-200"
                 onClick={handleWatchDemo}
+                disabled={demoState === "starting" || demoState === "running"}
               >
-                <Play className="mr-2 h-4 w-4" />
-                Watch Demo
+                {demoState === "starting" ? (
+                  <>
+                    <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                    Starting Demo
+                  </>
+                ) : demoState === "running" ? (
+                  <>
+                    <div className="mr-2 h-4 w-4 animate-pulse bg-current rounded-full" />
+                    Demo Running
+                  </>
+                ) : demoState === "completed" ? (
+                  <>
+                    <Play className="mr-2 h-4 w-4" />
+                    Watch Again
+                  </>
+                ) : (
+                  <>
+                    <Play className="mr-2 h-4 w-4" />
+                    Watch Demo
+                  </>
+                )}
               </Button>
             </div>
 
@@ -88,23 +135,166 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div className="relative">
-              {/* Glow Effect */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-2xl blur-xl" />
+              {/* Enhanced Glow Effect with Animation */}
+              <motion.div
+                className="absolute -inset-6 bg-gradient-to-r from-primary/30 to-secondary/30 rounded-3xl blur-2xl"
+                animate={{
+                  scale: [1, 1.05, 1],
+                  opacity: [0.3, 0.5, 0.3],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
 
-              {/* Widget Container */}
-              <div className="relative w-[480px] h-[720px] border rounded-2xl overflow-hidden shadow-2xl bg-background/80 backdrop-blur-sm">
-                <ChatWidget
-                  position="bottom-right"
-                  isOpen={isWidgetOpen}
-                  onToggle={setIsWidgetOpen}
-                  startDemo={startDemo}
-                  onDemoComplete={() => setStartDemo(false)}
-                />
-              </div>
+              {/* Floating Particles */}
+              <motion.div
+                className="absolute -top-8 -right-8 w-3 h-3 bg-primary/40 rounded-full"
+                animate={{
+                  y: [-10, 10, -10],
+                  x: [-5, 5, -5],
+                  opacity: [0.4, 0.8, 0.4],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+              <motion.div
+                className="absolute -bottom-6 -left-8 w-4 h-4 bg-secondary/30 rounded-full"
+                animate={{
+                  y: [10, -10, 10],
+                  x: [5, -5, 5],
+                  opacity: [0.3, 0.7, 0.3],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 1,
+                }}
+              />
 
-              {/* Floating Elements */}
-              <div className="absolute -top-4 -right-4 w-8 h-8 bg-primary/20 rounded-full animate-pulse" />
-              <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-secondary/20 rounded-full animate-pulse delay-1000" />
+              {/* Widget Container - Enhanced Browser Environment */}
+              <motion.div
+                className="relative w-[440px] h-[680px] border-2 rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-b from-background to-muted/20 backdrop-blur-sm"
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              >
+                {/* Enhanced Browser Header */}
+                <div className="h-10 bg-gradient-to-r from-muted/60 to-muted/40 border-b flex items-center px-4 gap-3">
+                  <div className="flex gap-2">
+                    <motion.div
+                      className="w-3 h-3 rounded-full bg-red-400/70"
+                      whileHover={{ scale: 1.2 }}
+                    />
+                    <motion.div
+                      className="w-3 h-3 rounded-full bg-yellow-400/70"
+                      whileHover={{ scale: 1.2 }}
+                    />
+                    <motion.div
+                      className="w-3 h-3 rounded-full bg-green-400/70"
+                      whileHover={{ scale: 1.2 }}
+                    />
+                  </div>
+                  <div className="flex-1 text-center">
+                    <div className="text-xs text-muted-foreground bg-background/60 rounded-md px-3 py-1 inline-flex items-center gap-2 border">
+                      <div className="w-3 h-3 text-green-500">🔒</div>
+                      yourwebsite.com
+                    </div>
+                  </div>
+                </div>
+
+                {/* Enhanced Website Content */}
+                <div className="h-[calc(100%-2.5rem)] relative bg-gradient-to-br from-background via-background/98 to-muted/10 overflow-hidden">
+                  {/* Animated Mock Content */}
+                  <div className="p-6 space-y-4">
+                    <motion.div
+                      className="h-5 bg-gradient-to-r from-muted/50 to-muted/30 rounded-md w-3/4"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.5 }}
+                    />
+                    <motion.div
+                      className="h-3 bg-muted/40 rounded w-full"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.7 }}
+                    />
+                    <motion.div
+                      className="h-3 bg-muted/40 rounded w-5/6"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.9 }}
+                    />
+                    <motion.div
+                      className="h-10 bg-gradient-to-r from-primary/20 to-primary/10 rounded-lg w-2/3 mt-8 flex items-center justify-center"
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 1.1 }}
+                    >
+                      <span className="text-xs text-primary font-medium">
+                        Get Started
+                      </span>
+                    </motion.div>
+                    <div className="space-y-3 mt-6">
+                      {[1, 2, 3, 4].map((i) => (
+                        <motion.div
+                          key={i}
+                          className="h-2 bg-muted/25 rounded w-full"
+                          initial={{ opacity: 0, scaleX: 0 }}
+                          animate={{ opacity: 1, scaleX: 1 }}
+                          transition={{ delay: 1.2 + i * 0.1 }}
+                          style={{ transformOrigin: "left" }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Enhanced Chat Widget Overlay */}
+                  <ChatWidget
+                    position="bottom-right"
+                    isOpen={isWidgetOpen}
+                    onToggle={handleWidgetToggle}
+                    startDemo={startDemo}
+                    onDemoComplete={handleDemoComplete}
+                    primaryColor="#4f46e5"
+                    secondaryColor="#ffffff"
+                    botName="ChatWidget AI"
+                    welcomeMessage="Hi! I'm here to help you learn about our chat widget. What would you like to know?"
+                  />
+                </div>
+              </motion.div>
+
+              {/* Enhanced Floating Elements */}
+              <motion.div
+                className="absolute -top-6 -right-6 w-8 h-8 bg-gradient-to-br from-primary/30 to-primary/10 rounded-full"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  rotate: [0, 180, 360],
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+              />
+              <motion.div
+                className="absolute -bottom-8 -left-6 w-6 h-6 bg-gradient-to-br from-secondary/30 to-secondary/10 rounded-full"
+                animate={{
+                  scale: [1, 0.8, 1],
+                  rotate: [360, 180, 0],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "linear",
+                  delay: 2,
+                }}
+              />
             </div>
           </motion.div>
         </div>
