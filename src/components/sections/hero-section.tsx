@@ -1,13 +1,12 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import ChatWidget from "@/components/chat/ChatWidget";
+import AnimatedChatDemo from "@/components/chat/AnimatedChatDemo";
 import { ArrowRight, Play, Sparkles } from "lucide-react";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
 export function HeroSection() {
-  const [isWidgetOpen, setIsWidgetOpen] = useState(false);
-  const [startDemo, setStartDemo] = useState(false);
+  const [isDemoPlaying, setIsDemoPlaying] = useState(false);
   const [demoState, setDemoState] = useState<
     "idle" | "starting" | "running" | "completed"
   >("idle");
@@ -15,17 +14,16 @@ export function HeroSection() {
   const handleWatchDemo = () => {
     if (demoState === "idle" || demoState === "completed") {
       setDemoState("starting");
-      setIsWidgetOpen(true);
-      // Small delay to ensure widget opens smoothly before starting demo
+      // Small delay for smooth transition
       setTimeout(() => {
-        setStartDemo(true);
+        setIsDemoPlaying(true);
         setDemoState("running");
-      }, 800);
+      }, 300);
     }
   };
 
   const handleDemoComplete = () => {
-    setStartDemo(false);
+    setIsDemoPlaying(false);
     setDemoState("completed");
     // Auto-reset after 3 seconds for re-watching
     setTimeout(() => {
@@ -33,12 +31,10 @@ export function HeroSection() {
     }, 3000);
   };
 
-  const handleWidgetToggle = (open: boolean) => {
-    setIsWidgetOpen(open);
-    if (!open) {
-      setStartDemo(false);
-      setDemoState("idle");
-    }
+  // Reset demo when needed
+  const resetDemo = () => {
+    setIsDemoPlaying(false);
+    setDemoState("idle");
   };
 
   return (
@@ -254,17 +250,12 @@ export function HeroSection() {
                     </div>
                   </div>
 
-                  {/* Enhanced Chat Widget Overlay */}
-                  <ChatWidget
-                    position="bottom-right"
-                    isOpen={isWidgetOpen}
-                    onToggle={handleWidgetToggle}
-                    startDemo={startDemo}
-                    onDemoComplete={handleDemoComplete}
+                  {/* Enhanced Animated Chat Demo */}
+                  <AnimatedChatDemo
+                    isPlaying={isDemoPlaying}
+                    onComplete={handleDemoComplete}
                     primaryColor="#4f46e5"
                     secondaryColor="#ffffff"
-                    botName="ChatWidget AI"
-                    welcomeMessage="Hi! I'm here to help you learn about our chat widget. What would you like to know?"
                   />
                 </div>
               </motion.div>

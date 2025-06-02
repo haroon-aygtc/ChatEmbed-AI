@@ -64,61 +64,50 @@ const ChatWidget = ({
       ],
     },
   ]);
+
+  // Limit messages to 10 to prevent widget from becoming too long
+  const limitedMessages = messages.slice(-10);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [demoStep, setDemoStep] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Demo conversation data - Optimized for professional showcase
+  // Demo conversation data - Improved and more realistic
   const demoConversation = [
     {
       sender: "user",
-      content: "Hi! I'm interested in your chat widget. How does it work?",
+      content: "Hi! Can you help me with your chat widget?",
     },
     {
       sender: "bot",
       content:
-        "Hello! 👋 Our AI-powered chat widget seamlessly integrates into any website to enhance customer engagement.\n\n**Key Features:**\n• Context-aware AI responses\n• Multiple AI model support (GPT, Gemini, Mistral)\n• Real-time WebSocket communication\n• Customizable branding & themes\n• Sub-5KB lightweight loader\n\nWhat aspect interests you most?",
+        "Hello! I'd be happy to help you with our AI chat widget. Our system provides intelligent, context-aware responses and can be easily embedded on any website.\n\nWhat would you like to know?",
       suggestions: [
-        "Integration process",
-        "AI capabilities",
-        "Customization options",
+        "How does it work?",
+        "Integration steps",
+        "Pricing options",
       ],
     },
-    { sender: "user", content: "Tell me about the AI capabilities" },
+    { sender: "user", content: "How does it work?" },
     {
       sender: "bot",
       content:
-        "Excellent question! Our AI system is built for enterprise-grade performance:\n\n🧠 **Smart AI Features:**\n• Knowledge base integration for context-aware responses\n• Multi-language support (50+ languages)\n• Sentiment analysis & intent recognition\n• Dynamic follow-up suggestions\n• Conversation memory & learning\n\n🔧 **Admin Control:**\n• Visual prompt flow editor\n• Custom response templates\n• AI model switching & routing\n• Performance analytics\n\nThe AI learns from your content to provide brand-consistent, accurate responses.",
-      suggestions: ["How to train the AI?", "Integration guide", "See pricing"],
+        "Our chat widget works through a simple 3-step process:\n\n1. **Easy Integration** - Add one script tag to your website\n2. **AI Configuration** - Customize responses and behavior through our admin dashboard\n3. **Real-time Chat** - Visitors get instant, intelligent responses\n\nThe widget is lightweight (under 5KB) and supports multiple AI models including GPT, Gemini, and Mistral.",
+      suggestions: ["See integration", "Admin features", "AI capabilities"],
     },
-    { sender: "user", content: "How to train the AI?" },
+    { sender: "user", content: "Tell me about admin features" },
     {
       sender: "bot",
       content:
-        "Training your AI is incredibly intuitive! 🎯\n\n**Simple 3-Step Process:**\n\n1️⃣ **Upload Content**\n   • Documents, FAQs, product info\n   • Drag & drop interface\n   • Auto-parsing & indexing\n\n2️⃣ **Configure Behavior**\n   • Set response tone & style\n   • Define conversation flows\n   • Create custom templates\n\n3️⃣ **Test & Deploy**\n   • Live preview mode\n   • A/B testing tools\n   • One-click deployment\n\n**Result:** AI that speaks your brand language and knows your business inside-out!",
-      suggestions: ["Integration process", "Pricing plans", "Start free trial"],
+        "Our admin dashboard gives you complete control:\n\n• **Knowledge Base Management** - Upload documents and FAQs\n• **Prompt Templates** - Create custom response formats\n• **AI Model Selection** - Choose between different AI providers\n• **Analytics & Insights** - Track conversations and performance\n• **Customization** - Brand colors, positioning, and behavior\n\nEverything is designed for non-technical users with an intuitive interface.",
+      suggestions: ["View pricing", "Start trial", "Integration guide"],
     },
-    { sender: "user", content: "What's the integration process like?" },
+    { sender: "user", content: "What's the pricing?" },
     {
       sender: "bot",
       content:
-        "Integration is designed for non-technical users! ⚡\n\n**Ultra-Simple Setup:**\n\n```html\n<script>\n(function(w,d,s){\n  // 5KB loader script\n  w.ChatWidget=w.ChatWidget||{};\n  // Auto-initialization\n})(window,document);\n</script>\n```\n\n**Complete Process:**\n✅ Copy script tag (30 seconds)\n✅ Paste before </body> tag\n✅ Customize in dashboard\n✅ Go live instantly!\n\n**No coding required** - our visual dashboard handles everything else.",
-      suggestions: ["See pricing", "Start free trial", "View documentation"],
-    },
-    { sender: "user", content: "What are your pricing plans?" },
-    {
-      sender: "bot",
-      content:
-        "We offer transparent, scalable pricing for every business size:\n\n💎 **Starter Plan - FREE**\n• 1,000 messages/month\n• Basic AI models\n• Standard customization\n• Email support\n\n🚀 **Professional - $29/month**\n• 10,000 messages/month\n• Advanced AI models (GPT-4, Gemini)\n• Full customization suite\n• Priority support + live chat\n• Analytics dashboard\n\n🏢 **Enterprise - $99/month**\n• Unlimited messages\n• All AI models + custom training\n• White-label solution\n• Dedicated account manager\n• SLA guarantee\n\n**All plans include 14-day free trial!**",
-      suggestions: ["Start free trial", "Compare features", "Contact sales"],
-    },
-    { sender: "user", content: "I'd like to start the free trial" },
-    {
-      sender: "bot",
-      content:
-        "Fantastic choice! 🎉 Let's get you set up with full access:\n\n**Your Free Trial Includes:**\n✅ Complete admin dashboard access\n✅ All Professional plan features\n✅ Pre-built templates & themes\n✅ Step-by-step onboarding guide\n✅ Priority email support\n✅ No credit card required\n\n**Next Steps:**\n1. Click 'Start Free Trial' above\n2. Create your account (2 minutes)\n3. Follow our setup wizard\n4. Deploy your first widget!\n\n**You'll be live in under 5 minutes!** 🚀\n\nReady to transform your customer engagement?",
-      suggestions: ["Setup questions", "Feature overview", "Contact support"],
+        "We offer flexible pricing for every business:\n\n**Free Plan** - 1,000 messages/month\n**Pro Plan** - $29/month for 10,000 messages\n**Enterprise** - Custom pricing for unlimited usage\n\nAll plans include the admin dashboard, multiple AI models, and customization options. Start with our free trial - no credit card required!",
+      suggestions: ["Start free trial", "Compare plans", "Contact sales"],
     },
   ];
 
@@ -180,7 +169,7 @@ const ChatWidget = ({
           // Show user typing briefly before message appears
           setInputValue(currentMessage.content);
           setTimeout(() => {
-            setMessages((prev) => [...prev, newMessage]);
+            addMessage(newMessage);
             setInputValue("");
             setDemoStep((prev) => prev + 1);
           }, 600);
@@ -189,7 +178,7 @@ const ChatWidget = ({
           setIsTyping(true);
           setTimeout(
             () => {
-              setMessages((prev) => [...prev, newMessage]);
+              addMessage(newMessage);
               setIsTyping(false);
               setDemoStep((prev) => prev + 1);
             },
@@ -233,6 +222,14 @@ const ChatWidget = ({
     }
   }, [isOpen, startDemo, welcomeMessage, demoStep]);
 
+  // Limit messages when adding new ones
+  const addMessage = (newMessage: Message) => {
+    setMessages((prev) => {
+      const updated = [...prev, newMessage];
+      return updated.length > 10 ? updated.slice(-10) : updated;
+    });
+  };
+
   // Handle toggle
   const handleToggle = () => {
     const newIsOpen = !isOpen;
@@ -254,7 +251,7 @@ const ChatWidget = ({
       timestamp: new Date(),
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    addMessage(userMessage);
     setInputValue("");
     setIsTyping(true);
 
@@ -273,7 +270,7 @@ const ChatWidget = ({
         ],
       };
 
-      setMessages((prev) => [...prev, botMessage]);
+      addMessage(botMessage);
       setIsTyping(false);
     }, 1500);
   };
@@ -290,7 +287,7 @@ const ChatWidget = ({
         timestamp: new Date(),
       };
 
-      setMessages((prev) => [...prev, userMessage]);
+      addMessage(userMessage);
       setIsTyping(true);
 
       // Simulate bot response
@@ -307,7 +304,7 @@ const ChatWidget = ({
           ],
         };
 
-        setMessages((prev) => [...prev, botMessage]);
+        addMessage(botMessage);
         setIsTyping(false);
       }, 1500);
     }, 300);
@@ -400,7 +397,7 @@ const ChatWidget = ({
 
             {/* Messages container */}
             <div
-              className="flex-1 p-4 bg-background overflow-y-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent"
+              className="flex-1 p-4 bg-background overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent"
               style={{
                 height:
                   propIsOpen !== undefined
@@ -414,9 +411,11 @@ const ChatWidget = ({
                   propIsOpen !== undefined
                     ? "calc(480px - 140px)"
                     : "calc(600px - 140px)",
+                wordWrap: "break-word",
+                overflowWrap: "break-word",
               }}
             >
-              {messages.map((message) => (
+              {limitedMessages.map((message) => (
                 <ChatMessage
                   key={message.id}
                   content={message.content}
@@ -424,7 +423,7 @@ const ChatWidget = ({
                   timestamp={message.timestamp}
                   isLoading={message.isLoading}
                   followUpSuggestions={message.followUpSuggestions}
-                  onFollowUpClick={handleSuggestionClick}
+                  onFollowUpClick={startDemo ? () => {} : handleSuggestionClick}
                 />
               ))}
               {isTyping && (
@@ -468,8 +467,8 @@ const ChatWidget = ({
             </div>
 
             {/* Input area */}
-            <div className="border-t p-4 bg-background">
-              <div className="flex gap-2">
+            <div className="border-t p-4 bg-background flex-shrink-0">
+              <div className="flex gap-2 items-end">
                 <Textarea
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
@@ -478,19 +477,20 @@ const ChatWidget = ({
                       ? "Demo mode - watch the conversation!"
                       : placeholder
                   }
-                  className={`resize-none min-h-[50px] max-h-[100px] text-sm transition-all duration-200 focus:ring-2 focus:ring-primary/20 ${startDemo ? "bg-muted/50 cursor-not-allowed" : ""}`}
+                  className={`resize-none min-h-[40px] max-h-[80px] text-sm transition-all duration-200 focus:ring-2 focus:ring-primary/20 flex-1 ${startDemo ? "bg-muted/50 cursor-not-allowed" : ""}`}
                   onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
+                    if (e.key === "Enter" && !e.shiftKey && !startDemo) {
                       e.preventDefault();
                       handleSendMessage();
                     }
                   }}
                   disabled={startDemo}
                   readOnly={startDemo}
+                  rows={1}
                 />
                 <Button
                   onClick={handleSendMessage}
-                  className="self-end transition-all duration-200 hover:scale-105"
+                  className="transition-all duration-200 hover:scale-105 flex-shrink-0"
                   style={{
                     backgroundColor: primaryColor,
                     color: secondaryColor,
