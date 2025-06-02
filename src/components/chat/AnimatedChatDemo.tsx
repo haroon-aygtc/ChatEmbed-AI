@@ -157,20 +157,24 @@ const AnimatedChatDemo = ({
               setTimeout(() => {
                 setTypingState((prev) => ({ ...prev, showSendEffect: true }));
 
-                // After send effect, add message and start AI typing
+                // After send effect, show typing indicator then full message
                 setTimeout(() => {
-                  setDisplayedMessages((prev) => [...prev, currentMessage]);
                   setTypingState({
                     isTypingInInput: false,
                     inputText: "",
                     showSendEffect: false,
-                    isAiTyping: true,
+                    isAiTyping: false,
                   });
 
-                  // Start AI typing after a brief delay
+                  // Show typing indicator for user message
+                  setIsTyping(true);
+
+                  // After typing indicator, show full message
                   setTimeout(() => {
+                    setIsTyping(false);
+                    setDisplayedMessages((prev) => [...prev, currentMessage]);
                     setCurrentStep((prev) => prev + 1);
-                  }, 800);
+                  }, 1000);
                 }, 300);
               }, 500);
             }
