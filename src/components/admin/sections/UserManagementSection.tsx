@@ -334,8 +334,10 @@ function UserManagement() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Users className="h-6 w-6" />
-          <h3 className="text-2xl font-bold">User Management</h3>
+          <Users className="h-6 w-6 text-foreground" />
+          <h3 className="text-2xl font-bold text-foreground">
+            User Management
+          </h3>
         </div>
         <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
           <DialogTrigger asChild>
@@ -392,10 +394,12 @@ function UserManagement() {
       </Card>
 
       {/* Users Table */}
-      <Card>
+      <Card className="bg-card border-border">
         <CardHeader>
-          <CardTitle>Users ({filteredUsers.length})</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-card-foreground">
+            Users ({filteredUsers.length})
+          </CardTitle>
+          <CardDescription className="text-muted-foreground">
             Manage user accounts, roles, and permissions
           </CardDescription>
         </CardHeader>
@@ -426,7 +430,9 @@ function UserManagement() {
                         </AvatarFallback>
                       </Avatar>
                       <div>
-                        <div className="font-medium">{user.name}</div>
+                        <div className="font-medium text-foreground">
+                          {user.name}
+                        </div>
                         <div className="text-sm text-muted-foreground">
                           {user.email}
                         </div>
@@ -446,12 +452,12 @@ function UserManagement() {
                       {user.status}
                     </Badge>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="text-foreground">
                     {user.lastLogin
                       ? new Date(user.lastLogin).toLocaleDateString()
                       : "Never"}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="text-foreground">
                     {new Date(user.createdAt).toLocaleDateString()}
                   </TableCell>
                   <TableCell className="text-right">
@@ -719,8 +725,10 @@ function RoleManagement() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Shield className="h-6 w-6" />
-          <h3 className="text-2xl font-bold">Role Management</h3>
+          <Shield className="h-6 w-6 text-foreground" />
+          <h3 className="text-2xl font-bold text-foreground">
+            Role Management
+          </h3>
         </div>
         <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
           <DialogTrigger asChild>
@@ -747,11 +755,11 @@ function RoleManagement() {
       {/* Roles Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {roles.map((role) => (
-          <Card key={role.id} className="relative">
+          <Card key={role.id} className="relative bg-card border-border">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle className="flex items-center gap-2">
-                  <Shield className="h-5 w-5" />
+                <CardTitle className="flex items-center gap-2 text-card-foreground">
+                  <Shield className="h-5 w-5 text-foreground" />
                   {role.name}
                 </CardTitle>
                 {role.isSystem && (
@@ -760,7 +768,9 @@ function RoleManagement() {
                   </Badge>
                 )}
               </div>
-              <CardDescription>{role.description}</CardDescription>
+              <CardDescription className="text-muted-foreground">
+                {role.description}
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between text-sm">
@@ -906,12 +916,14 @@ function RoleForm({
       </div>
       <div className="space-y-4">
         <Label>Permissions</Label>
-        <ScrollArea className="h-[300px] border rounded-md p-4">
+        <ScrollArea className="h-[300px] border border-border rounded-md p-4 bg-background">
           <div className="space-y-6">
             {Object.entries(permissionsByCategory).map(
               ([category, permissions]) => (
                 <div key={category} className="space-y-3">
-                  <h4 className="font-medium text-sm">{category}</h4>
+                  <h4 className="font-medium text-sm text-foreground">
+                    {category}
+                  </h4>
                   <div className="space-y-2 pl-4">
                     {permissions.map((permission) => (
                       <div
@@ -930,7 +942,7 @@ function RoleForm({
                         <div className="flex-1">
                           <Label
                             htmlFor={permission.id}
-                            className="text-sm font-medium"
+                            className="text-sm font-medium text-foreground"
                           >
                             {permission.name}
                           </Label>
@@ -1033,8 +1045,10 @@ function PermissionManagement() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Key className="h-6 w-6" />
-          <h3 className="text-2xl font-bold">Permission Management</h3>
+          <Key className="h-6 w-6 text-foreground" />
+          <h3 className="text-2xl font-bold text-foreground">
+            Permission Management
+          </h3>
         </div>
         <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
           <DialogTrigger asChild>
@@ -1092,10 +1106,12 @@ function PermissionManagement() {
       </Card>
 
       {/* Permissions Table */}
-      <Card>
+      <Card className="bg-card border-border">
         <CardHeader>
-          <CardTitle>Permissions ({filteredPermissions.length})</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-card-foreground">
+            Permissions ({filteredPermissions.length})
+          </CardTitle>
+          <CardDescription className="text-muted-foreground">
             Manage system permissions and access controls
           </CardDescription>
         </CardHeader>
@@ -1114,7 +1130,9 @@ function PermissionManagement() {
               {filteredPermissions.map((permission) => (
                 <TableRow key={permission.id}>
                   <TableCell>
-                    <div className="font-medium">{permission.name}</div>
+                    <div className="font-medium text-foreground">
+                      {permission.name}
+                    </div>
                   </TableCell>
                   <TableCell>
                     <Badge variant="outline">{permission.category}</Badge>
@@ -1296,10 +1314,10 @@ function PermissionForm({
 
 export function UserManagementSection() {
   return (
-    <div className="space-y-6 bg-white">
+    <div className="space-y-6 bg-background">
       <div className="flex items-center gap-2">
-        <Users className="h-6 w-6" />
-        <h2 className="text-2xl font-bold">User Management</h2>
+        <Users className="h-6 w-6 text-foreground" />
+        <h2 className="text-2xl font-bold text-foreground">User Management</h2>
       </div>
 
       <Tabs defaultValue="users" className="space-y-6">
