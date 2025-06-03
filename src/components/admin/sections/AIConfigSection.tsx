@@ -347,7 +347,7 @@ export function AIConfigSection() {
                 provider={provider}
                 isSelected={selectedProvider === provider.id}
                 onSelect={() => setSelectedProvider(provider.id)}
-                onConfigure={() => {}}
+                onConfigure={() => { }}
               />
             ))}
           </div>

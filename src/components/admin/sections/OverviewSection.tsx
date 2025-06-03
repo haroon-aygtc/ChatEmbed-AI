@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -59,7 +60,7 @@ function MetricCard({
               className={cn(
                 "flex items-center",
                 changeType === "positive" &&
-                  "text-green-600 dark:text-green-400",
+                "text-green-600 dark:text-green-400",
                 changeType === "negative" && "text-red-600 dark:text-red-400",
                 changeType === "neutral" && "text-muted-foreground",
               )}
@@ -273,7 +274,7 @@ function QuickActions() {
             className="w-full justify-start h-auto p-4"
             asChild
           >
-            <a href={action.href}>
+            <Link href={action.href}>
               <div className="flex items-center space-x-3">
                 <div className="flex-shrink-0">{action.icon}</div>
                 <div className="text-left">
@@ -283,7 +284,7 @@ function QuickActions() {
                   </div>
                 </div>
               </div>
-            </a>
+            </Link>
           </Button>
         ))}
       </CardContent>
