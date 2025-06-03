@@ -84,7 +84,7 @@ interface SystemSettings {
   data_retention_days: number;
 }
 
-export default function SettingsSection() {
+export function SettingsSection() {
   const [systemStatus] = useState<SystemStatus>({
     database: "connected",
     ai_services: "active",

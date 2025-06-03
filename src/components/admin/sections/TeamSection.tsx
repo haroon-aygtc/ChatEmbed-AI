@@ -91,7 +91,11 @@ const sampleTeamMembers: TeamMember[] = [
     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=sarah",
     joinedAt: "2024-01-05T00:00:00Z",
     lastActive: "2024-01-15T12:15:00Z",
-    permissions: ["manage_conversations", "view_analytics", "manage_knowledge_base"],
+    permissions: [
+      "manage_conversations",
+      "view_analytics",
+      "manage_knowledge_base",
+    ],
   },
   {
     id: "3",
@@ -144,7 +148,11 @@ const roleConfig = {
   },
 };
 
-function TeamMemberCard({ member, onEdit, onDelete }: {
+function TeamMemberCard({
+  member,
+  onEdit,
+  onDelete,
+}: {
   member: TeamMember;
   onEdit: (member: TeamMember) => void;
   onDelete: (id: string) => void;
@@ -160,7 +168,10 @@ function TeamMemberCard({ member, onEdit, onDelete }: {
             <Avatar className="h-12 w-12">
               <AvatarImage src={member.avatar} alt={member.name} />
               <AvatarFallback>
-                {member.name.split(" ").map(n => n[0]).join("")}
+                {member.name
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")}
               </AvatarFallback>
             </Avatar>
             <div>
@@ -179,7 +190,7 @@ function TeamMemberCard({ member, onEdit, onDelete }: {
                     member.status === "pending" &&
                       "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100",
                     member.status === "inactive" &&
-                      "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100"
+                      "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100",
                   )}
                 >
                   {member.status}
@@ -235,7 +246,11 @@ function TeamMemberCard({ member, onEdit, onDelete }: {
   );
 }
 
-function AddMemberDialog({ onAdd }: { onAdd: (member: Omit<TeamMember, "id">) => void }) {
+function AddMemberDialog({
+  onAdd,
+}: {
+  onAdd: (member: Omit<TeamMember, "id">) => void;
+}) {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -278,7 +293,9 @@ function AddMemberDialog({ onAdd }: { onAdd: (member: Omit<TeamMember, "id">) =>
               <Input
                 id="name"
                 value={formData.name}
-                onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, name: e.target.value }))
+                }
                 placeholder="Enter full name"
                 required
               />
@@ -289,7 +306,9 @@ function AddMemberDialog({ onAdd }: { onAdd: (member: Omit<TeamMember, "id">) =>
                 id="email"
                 type="email"
                 value={formData.email}
-                onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, email: e.target.value }))
+                }
                 placeholder="Enter email address"
                 required
               />
@@ -298,7 +317,12 @@ function AddMemberDialog({ onAdd }: { onAdd: (member: Omit<TeamMember, "id">) =>
               <Label htmlFor="role">Role</Label>
               <Select
                 value={formData.role}
-                onValueChange={(value) => setFormData(prev => ({ ...prev, role: value as TeamMember["role"] }))}
+                onValueChange={(value) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    role: value as TeamMember["role"],
+                  }))
+                }
               >
                 <SelectTrigger>
                   <SelectValue />
@@ -311,7 +335,9 @@ function AddMemberDialog({ onAdd }: { onAdd: (member: Omit<TeamMember, "id">) =>
                         <div className="flex items-center space-x-2">
                           <Icon className="h-4 w-4" />
                           <span>{config.label}</span>
-                          <span className="text-xs text-muted-foreground">- {config.description}</span>
+                          <span className="text-xs text-muted-foreground">
+                            - {config.description}
+                          </span>
                         </div>
                       </SelectItem>
                     );
@@ -321,12 +347,14 @@ function AddMemberDialog({ onAdd }: { onAdd: (member: Omit<TeamMember, "id">) =>
             </div>
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setOpen(false)}
+            >
               Cancel
             </Button>
-            <Button type="submit">
-              Send Invitation
-            </Button>
+            <Button type="submit">Send Invitation</Button>
           </DialogFooter>
         </form>
       </DialogContent>
@@ -336,13 +364,41 @@ function AddMemberDialog({ onAdd }: { onAdd: (member: Omit<TeamMember, "id">) =>
 
 function RolePermissions() {
   const permissions = [
-    { id: "manage_conversations", label: "Manage Conversations", description: "View and respond to chat sessions" },
-    { id: "view_analytics", label: "View Analytics", description: "Access performance metrics and reports" },
-    { id: "manage_knowledge_base", label: "Manage Knowledge Base", description: "Add and edit knowledge base articles" },
-    { id: "configure_ai", label: "Configure AI", description: "Modify AI settings and prompts" },
-    { id: "manage_widget", label: "Manage Widget", description: "Customize widget appearance and behavior" },
-    { id: "manage_team", label: "Manage Team", description: "Add, edit, and remove team members" },
-    { id: "system_settings", label: "System Settings", description: "Access system-wide configuration" },
+    {
+      id: "manage_conversations",
+      label: "Manage Conversations",
+      description: "View and respond to chat sessions",
+    },
+    {
+      id: "view_analytics",
+      label: "View Analytics",
+      description: "Access performance metrics and reports",
+    },
+    {
+      id: "manage_knowledge_base",
+      label: "Manage Knowledge Base",
+      description: "Add and edit knowledge base articles",
+    },
+    {
+      id: "configure_ai",
+      label: "Configure AI",
+      description: "Modify AI settings and prompts",
+    },
+    {
+      id: "manage_widget",
+      label: "Manage Widget",
+      description: "Customize widget appearance and behavior",
+    },
+    {
+      id: "manage_team",
+      label: "Manage Team",
+      description: "Add, edit, and remove team members",
+    },
+    {
+      id: "system_settings",
+      label: "System Settings",
+      description: "Access system-wide configuration",
+    },
   ];
 
   return (
@@ -363,16 +419,31 @@ function RolePermissions() {
             <CardContent>
               <div className="space-y-3">
                 {permissions.map((permission) => {
-                  const hasPermission = roleKey === "admin" || 
-                    (roleKey === "moderator" && ["manage_conversations", "view_analytics", "manage_knowledge_base"].includes(permission.id)) ||
-                    (roleKey === "agent" && ["manage_conversations", "view_analytics"].includes(permission.id)) ||
-                    (roleKey === "viewer" && permission.id === "view_analytics");
-                  
+                  const hasPermission =
+                    roleKey === "admin" ||
+                    (roleKey === "moderator" &&
+                      [
+                        "manage_conversations",
+                        "view_analytics",
+                        "manage_knowledge_base",
+                      ].includes(permission.id)) ||
+                    (roleKey === "agent" &&
+                      ["manage_conversations", "view_analytics"].includes(
+                        permission.id,
+                      )) ||
+                    (roleKey === "viewer" &&
+                      permission.id === "view_analytics");
+
                   return (
-                    <div key={permission.id} className="flex items-center justify-between">
+                    <div
+                      key={permission.id}
+                      className="flex items-center justify-between"
+                    >
                       <div>
                         <p className="font-medium">{permission.label}</p>
-                        <p className="text-sm text-muted-foreground">{permission.description}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {permission.description}
+                        </p>
                       </div>
                       <Badge variant={hasPermission ? "default" : "secondary"}>
                         {hasPermission ? "Allowed" : "Denied"}
@@ -390,7 +461,8 @@ function RolePermissions() {
 }
 
 export function TeamSection() {
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>(sampleTeamMembers);
+  const [teamMembers, setTeamMembers] =
+    useState<TeamMember[]>(sampleTeamMembers);
   const [editingMember, setEditingMember] = useState<TeamMember | null>(null);
   const { toast } = useToast();
 
@@ -399,10 +471,10 @@ export function TeamSection() {
       ...newMember,
       id: Date.now().toString(),
     };
-    setTeamMembers(prev => [...prev, member]);
+    setTeamMembers((prev) => [...prev, member]);
     toast({
       title: "Member Added",
-      description: `Invitation sent to ${member.email}",
+      description: `Invitation sent to ${member.email}`,
     });
   };
 
@@ -411,15 +483,17 @@ export function TeamSection() {
   };
 
   const handleDeleteMember = (id: string) => {
-    setTeamMembers(prev => prev.filter(m => m.id !== id));
+    setTeamMembers((prev) => prev.filter((m) => m.id !== id));
     toast({
       title: "Member Removed",
       description: "Team member has been removed successfully.",
     });
   };
 
-  const activeMembers = teamMembers.filter(m => m.status === "active").length;
-  const pendingMembers = teamMembers.filter(m => m.status === "pending").length;
+  const activeMembers = teamMembers.filter((m) => m.status === "active").length;
+  const pendingMembers = teamMembers.filter(
+    (m) => m.status === "pending",
+  ).length;
 
   return (
     <div className="space-y-6">
@@ -456,7 +530,9 @@ export function TeamSection() {
         </Card>
         <Card>
           <CardContent className="p-4">
-            <div className="text-2xl font-bold">{teamMembers.filter(m => m.role === "admin").length}</div>
+            <div className="text-2xl font-bold">
+              {teamMembers.filter((m) => m.role === "admin").length}
+            </div>
             <p className="text-sm text-muted-foreground">Administrators</p>
           </CardContent>
         </Card>
@@ -471,20 +547,24 @@ export function TeamSection() {
 
         <TabsContent value="members" className="space-y-6">
           <div className="grid gap-6 md:grid-cols-2">
-            {teamMembers.filter(m => m.status === "active").map((member) => (
-              <TeamMemberCard
-                key={member.id}
-                member={member}
-                onEdit={handleEditMember}
-                onDelete={handleDeleteMember}
-              />
-            ))}
+            {teamMembers
+              .filter((m) => m.status === "active")
+              .map((member) => (
+                <TeamMemberCard
+                  key={member.id}
+                  member={member}
+                  onEdit={handleEditMember}
+                  onDelete={handleDeleteMember}
+                />
+              ))}
           </div>
-          {teamMembers.filter(m => m.status === "active").length === 0 && (
+          {teamMembers.filter((m) => m.status === "active").length === 0 && (
             <Card>
               <CardContent className="p-12 text-center">
                 <Users className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-lg font-semibold mb-2">No Active Members</h3>
+                <h3 className="text-lg font-semibold mb-2">
+                  No Active Members
+                </h3>
                 <p className="text-muted-foreground mb-4">
                   Add team members to collaborate on your chat system
                 </p>
@@ -500,20 +580,24 @@ export function TeamSection() {
 
         <TabsContent value="invites" className="space-y-6">
           <div className="grid gap-6 md:grid-cols-2">
-            {teamMembers.filter(m => m.status === "pending").map((member) => (
-              <TeamMemberCard
-                key={member.id}
-                member={member}
-                onEdit={handleEditMember}
-                onDelete={handleDeleteMember}
-              />
-            ))}
+            {teamMembers
+              .filter((m) => m.status === "pending")
+              .map((member) => (
+                <TeamMemberCard
+                  key={member.id}
+                  member={member}
+                  onEdit={handleEditMember}
+                  onDelete={handleDeleteMember}
+                />
+              ))}
           </div>
-          {teamMembers.filter(m => m.status === "pending").length === 0 && (
+          {teamMembers.filter((m) => m.status === "pending").length === 0 && (
             <Card>
               <CardContent className="p-12 text-center">
                 <Mail className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-lg font-semibold mb-2">No Pending Invites</h3>
+                <h3 className="text-lg font-semibold mb-2">
+                  No Pending Invites
+                </h3>
                 <p className="text-muted-foreground">
                   All team invitations have been accepted or expired
                 </p>
