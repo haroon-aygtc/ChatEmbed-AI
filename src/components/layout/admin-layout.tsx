@@ -146,32 +146,26 @@ export function AdminLayout({
         {/* Enhanced Sidebar */}
         <aside
           className={cn(
-            "flex flex-col bg-white dark:bg-gray-900 border-r-2 border-gray-100 dark:border-gray-800 transition-all duration-300 ease-in-out shadow-lg",
-            sidebarCollapsed ? "w-16" : "w-80",
+            "flex flex-col bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 transition-all duration-300 ease-in-out",
+            sidebarCollapsed ? "w-16" : "w-64",
           )}
         >
           {/* Logo Section */}
-          <div className="flex h-20 items-center border-b-2 border-gray-100 dark:border-gray-800 px-6 py-4">
+          <div className="flex h-16 items-center border-b border-gray-200 dark:border-gray-800 px-4">
             {!sidebarCollapsed ? (
-              <Link href="/admin" className="flex items-center space-x-4 group">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 text-white shadow-md group-hover:shadow-lg transition-all duration-200">
-                  <MessageSquare className="h-5 w-5" />
+              <Link href="/admin" className="flex items-center space-x-3">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white">
+                  <MessageSquare className="h-4 w-4" />
                 </div>
-                <div className="flex flex-col space-y-1">
-                  <span className="text-base font-bold text-gray-900 dark:text-white">
+                <div>
+                  <span className="text-sm font-semibold text-gray-900 dark:text-white">
                     ChatWidget
-                  </span>
-                  <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
-                    Admin Panel
                   </span>
                 </div>
               </Link>
             ) : (
-              <Link
-                href="/admin"
-                className="flex items-center justify-center group"
-              >
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 text-white shadow-sm group-hover:shadow-md transition-shadow">
+              <Link href="/admin" className="flex items-center justify-center">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white">
                   <MessageSquare className="h-4 w-4" />
                 </div>
               </Link>
@@ -179,8 +173,8 @@ export function AdminLayout({
           </div>
 
           {/* Navigation */}
-          <ScrollArea className="flex-1 px-4 py-6">
-            <nav className="space-y-2">
+          <ScrollArea className="flex-1 px-3 py-4">
+            <nav className="space-y-1">
               {sidebarItems.map((item) => {
                 const isActive = pathname === item.href;
                 const Icon = item.icon;
@@ -189,47 +183,23 @@ export function AdminLayout({
                   <Button
                     variant="ghost"
                     className={cn(
-                      "w-full justify-start gap-4 h-14 px-4 py-3 text-left font-medium transition-all duration-200 rounded-xl mb-1",
-                      sidebarCollapsed && "justify-center px-3",
+                      "w-full justify-start gap-3 h-10 px-3 text-left font-medium transition-colors border-b border-gray-100/50 dark:border-gray-800/50 rounded-none mb-0",
+                      sidebarCollapsed && "justify-center px-2",
                       isActive
-                        ? "bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/50 dark:to-indigo-950/50 text-blue-700 dark:text-blue-300 border-2 border-blue-200 dark:border-blue-800 shadow-md"
-                        : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white border-2 border-transparent hover:border-gray-200 dark:hover:border-gray-700",
+                        ? "bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300"
+                        : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800/50",
                     )}
                     asChild
                   >
-                    <Link href={item.href} className="group">
-                      <div
-                        className={cn(
-                          "flex h-6 w-6 items-center justify-center transition-colors rounded-lg p-1",
-                          isActive
-                            ? "text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30"
-                            : "text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300 group-hover:bg-gray-100 dark:group-hover:bg-gray-700/50",
-                        )}
-                      >
-                        <Icon className="h-5 w-5" />
-                      </div>
+                    <Link href={item.href}>
+                      <Icon className="h-4 w-4 flex-shrink-0" />
                       {!sidebarCollapsed && (
                         <>
-                          <div className="flex-1 flex flex-col space-y-1">
-                            <span className="text-sm font-semibold">
-                              {item.title}
-                            </span>
-                            <span className="text-xs text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300 leading-relaxed">
-                              {item.description}
-                            </span>
-                          </div>
+                          <span className="text-sm">{item.title}</span>
                           {item.badge && (
                             <Badge
-                              variant={
-                                item.badge === "New" ? "default" : "secondary"
-                              }
-                              className={cn(
-                                "ml-auto text-xs px-3 py-1 font-medium rounded-full",
-                                item.badge === "New" &&
-                                  "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300 border border-green-200 dark:border-green-800",
-                                item.badge === "Beta" &&
-                                  "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300 border border-orange-200 dark:border-orange-800",
-                              )}
+                              variant="secondary"
+                              className="ml-auto text-xs px-2 py-0 h-5"
                             >
                               {item.badge}
                             </Badge>
@@ -264,34 +234,81 @@ export function AdminLayout({
             </nav>
           </ScrollArea>
 
-          {/* Collapse Button */}
-          <div className="border-t-2 border-gray-100 dark:border-gray-800 p-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-              className={cn(
-                "w-full h-12 transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl border-2 border-transparent hover:border-gray-200 dark:hover:border-gray-700",
-                sidebarCollapsed ? "justify-center px-3" : "justify-start px-4",
-              )}
-            >
-              {sidebarCollapsed ? (
-                <ChevronRight className="h-4 w-4" />
-              ) : (
-                <>
-                  <ChevronLeft className="h-4 w-4 mr-3" />
-                  <span className="text-sm font-medium">Collapse</span>
-                </>
-              )}
-            </Button>
+          {/* User Profile Section */}
+          <div className="border-t border-gray-200 dark:border-gray-800 p-3">
+            {!sidebarCollapsed ? (
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage
+                      src="https://api.dicebear.com/7.x/avataaars/svg?seed=admin"
+                      alt="Admin"
+                    />
+                    <AvatarFallback className="bg-blue-600 text-white text-xs">
+                      AD
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                      Admin User
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                      admin@example.com
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <Button variant="ghost" size="sm" className="h-8 px-2">
+                    <Settings className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+                    className="h-8 px-2"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 px-2 text-red-600 hover:text-red-700"
+                  >
+                    <LogOut className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <Button variant="ghost" size="sm" className="w-full h-8 px-2">
+                  <Avatar className="h-6 w-6">
+                    <AvatarImage
+                      src="https://api.dicebear.com/7.x/avataaars/svg?seed=admin"
+                      alt="Admin"
+                    />
+                    <AvatarFallback className="bg-blue-600 text-white text-xs">
+                      AD
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+                  className="w-full h-8 px-2"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+            )}
           </div>
         </aside>
 
         {/* Main Content */}
         <div className="flex flex-1 flex-col overflow-hidden">
           {/* Enhanced Header */}
-          <header className="flex h-20 items-center justify-between border-b-2 border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-8 py-4 shadow-md">
-            <div className="flex items-center space-x-8">
+          <header className="flex h-16 items-center justify-between border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-6">
+            <div className="flex items-center space-x-4">
               {/* Breadcrumbs */}
               <Breadcrumb>
                 <BreadcrumbList>
@@ -305,160 +322,54 @@ export function AdminLayout({
                         ) : (
                           <BreadcrumbLink
                             href={crumb.href || "#"}
-                            className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+                            className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
                           >
                             {crumb.label}
                           </BreadcrumbLink>
                         )}
                       </BreadcrumbItem>
                       {index < defaultBreadcrumbs.length - 1 && (
-                        <BreadcrumbSeparator className="text-gray-400" />
+                        <BreadcrumbSeparator />
                       )}
                     </React.Fragment>
                   ))}
                 </BreadcrumbList>
               </Breadcrumb>
-
-              {/* Quick Search */}
-              <div className="hidden md:flex">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-72 h-12 justify-start text-gray-500 dark:text-gray-400 border-2 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl px-4"
-                >
-                  <Search className="h-4 w-4 mr-3" />
-                  <span className="font-medium">Search...</span>
-                  <div className="ml-auto flex items-center space-x-2">
-                    <kbd className="pointer-events-none inline-flex h-6 select-none items-center gap-1 rounded-md border-2 bg-muted px-2 font-mono text-[11px] font-medium text-muted-foreground">
-                      <Command className="h-3 w-3" />
-                    </kbd>
-                    <kbd className="pointer-events-none inline-flex h-6 select-none items-center gap-1 rounded-md border-2 bg-muted px-2 font-mono text-[11px] font-medium text-muted-foreground">
-                      K
-                    </kbd>
-                  </div>
-                </Button>
-              </div>
             </div>
 
             {/* Header Actions */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3">
               <ThemeSwitcher />
-
-              {/* Notifications */}
-              <Button
-                variant="ghost"
-                size="sm"
-                className="relative h-12 w-12 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl border-2 border-transparent hover:border-gray-200 dark:hover:border-gray-700"
-              >
-                <Bell className="h-5 w-5" />
-                <Badge
-                  variant="destructive"
-                  className="absolute -top-2 -right-2 h-6 w-6 rounded-full p-0 text-xs flex items-center justify-center font-bold border-2 border-white dark:border-gray-900"
-                >
-                  3
-                </Badge>
+              <Button variant="ghost" size="sm" className="h-8 w-8">
+                <Bell className="h-4 w-4" />
               </Button>
-
-              {/* Help */}
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-12 w-12 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl border-2 border-transparent hover:border-gray-200 dark:hover:border-gray-700"
-              >
-                <HelpCircle className="h-5 w-5" />
+              <Button variant="ghost" size="sm" className="h-8 w-8">
+                <HelpCircle className="h-4 w-4" />
               </Button>
-
-              <Separator
-                orientation="vertical"
-                className="h-8 w-0.5 bg-gray-200 dark:bg-gray-700"
-              />
-
-              {/* User Menu */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="relative h-12 w-12 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 border-2 border-transparent hover:border-gray-200 dark:hover:border-gray-700 p-1"
-                  >
-                    <Avatar className="h-10 w-10">
-                      <AvatarImage
-                        src="https://api.dicebear.com/7.x/avataaars/svg?seed=admin"
-                        alt="Admin"
-                      />
-                      <AvatarFallback className="bg-gradient-to-br from-blue-600 to-purple-600 text-white text-sm font-bold border-2 border-white dark:border-gray-900">
-                        AD
-                      </AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  className="w-64 p-2"
-                  align="end"
-                  forceMount
-                >
-                  <DropdownMenuLabel className="font-normal p-3">
-                    <div className="flex flex-col space-y-2">
-                      <p className="text-base font-semibold leading-none">
-                        Admin User
-                      </p>
-                      <p className="text-sm leading-none text-muted-foreground">
-                        admin@chatwidget.com
-                      </p>
-                    </div>
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem className="cursor-pointer h-12 px-3 py-2 rounded-lg">
-                    <User className="mr-3 h-5 w-5" />
-                    <span className="font-medium">Profile</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer h-12 px-3 py-2 rounded-lg">
-                    <Cog className="mr-3 h-5 w-5" />
-                    <span className="font-medium">Settings</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer h-12 px-3 py-2 rounded-lg">
-                    <Shield className="mr-3 h-5 w-5" />
-                    <span className="font-medium">Security</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem className="cursor-pointer h-12 px-3 py-2 rounded-lg text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/50">
-                    <LogOut className="mr-3 h-5 w-5" />
-                    <span className="font-medium">Log out</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
             </div>
           </header>
 
           {/* Page Content */}
-          <main className="flex-1 overflow-auto bg-gray-50/50 dark:bg-gray-950/50">
-            <div className="container mx-auto p-8 max-w-7xl">
+          <main className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-950">
+            <div className="h-full p-6">
               {/* Page Header */}
-              <div className="mb-10">
-                <div className="flex items-center justify-between p-6 bg-white dark:bg-gray-900 rounded-2xl border-2 border-gray-100 dark:border-gray-800 shadow-sm">
-                  <div className="space-y-3">
-                    <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+              <div className="mb-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
                       {title}
                     </h1>
                     {description && (
-                      <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed max-w-2xl">
+                      <p className="text-gray-600 dark:text-gray-400 mt-1">
                         {description}
                       </p>
                     )}
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Badge
-                      variant="outline"
-                      className="text-sm px-4 py-2 rounded-full border-2"
-                    >
-                      <Activity className="h-4 w-4 mr-2" />
-                      Live
-                    </Badge>
                   </div>
                 </div>
               </div>
 
               {/* Page Content */}
-              <div className="space-y-8">{children}</div>
+              <div className="space-y-6">{children}</div>
             </div>
           </main>
         </div>
