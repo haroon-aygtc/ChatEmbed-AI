@@ -1267,8 +1267,8 @@ export default function AdminDashboard({
               </Card>
             </TabsContent>
           </Tabs>
-        </main>
+        </div>
       </div>
-    </div>
+    </AdminLayout>
   );
 }
