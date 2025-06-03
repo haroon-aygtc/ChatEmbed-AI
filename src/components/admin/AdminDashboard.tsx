@@ -44,9 +44,80 @@ import {
   Users,
 } from "lucide-react";
 
+// TypeScript interfaces for better type safety
+interface Conversation {
+  id: number;
+  user: string;
+  message: string;
+  time: string;
+  status: "resolved" | "pending";
+}
+
+interface Document {
+  id: number;
+  title: string;
+  size: string;
+  date: string;
+  status: "processed" | "processing";
+}
+
+interface TeamMember {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+}
+
 interface AdminDashboardProps {
   initialTab?: string;
 }
+
+// Demo data - clearly marked as such
+const DEMO_CONVERSATIONS: Conversation[] = [
+  {
+    id: 1,
+    user: "Demo User 1",
+    message: "Sample support question",
+    time: "2 mins ago",
+    status: "resolved",
+  },
+  {
+    id: 2,
+    user: "Demo User 2",
+    message: "Another sample question",
+    time: "15 mins ago",
+    status: "resolved",
+  },
+  // Reduced to just 2 items to minimize mock data
+];
+
+const DEMO_DOCUMENTS: Document[] = [
+  {
+    id: 1,
+    title: "Sample Document.pdf",
+    size: "2.4 MB",
+    date: "2023-05-15",
+    status: "processed",
+  },
+  {
+    id: 2,
+    title: "Demo FAQ.md",
+    size: "0.3 MB",
+    date: "2023-07-10",
+    status: "processed",
+  },
+  // Reduced to minimize mock data
+];
+
+const DEMO_TEAM_MEMBERS: TeamMember[] = [
+  {
+    id: 1,
+    name: "Demo Admin",
+    email: "admin@demo.com",
+    role: "Admin",
+  },
+  // Reduced to single demo entry
+];
 
 export default function AdminDashboard({
   initialTab = "overview",
@@ -174,6 +245,14 @@ export default function AdminDashboard({
                 </Button>
               </div>
 
+              {/* Demo Notice */}
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                <p className="text-sm text-yellow-800">
+                  <strong>Demo Mode:</strong> This dashboard shows sample data for demonstration purposes.
+                  Connect your data source to see real analytics.
+                </p>
+              </div>
+
               <div className="grid gap-4 md:grid-cols-3">
                 <Card>
                   <CardHeader className="pb-2">
@@ -182,9 +261,9 @@ export default function AdminDashboard({
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">1,248</div>
+                    <div className="text-2xl font-bold">--</div>
                     <p className="text-xs text-muted-foreground mt-1">
-                      +12% from last month
+                      Connect data source to view
                     </p>
                   </CardContent>
                 </Card>
@@ -195,9 +274,9 @@ export default function AdminDashboard({
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">1.8s</div>
+                    <div className="text-2xl font-bold">--</div>
                     <p className="text-xs text-muted-foreground mt-1">
-                      -0.3s from last month
+                      Connect data source to view
                     </p>
                   </CardContent>
                 </Card>
@@ -208,9 +287,9 @@ export default function AdminDashboard({
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">94%</div>
+                    <div className="text-2xl font-bold">--</div>
                     <p className="text-xs text-muted-foreground mt-1">
-                      +2% from last month
+                      Connect data source to view
                     </p>
                   </CardContent>
                 </Card>
@@ -226,81 +305,51 @@ export default function AdminDashboard({
                 <CardContent>
                   <ScrollArea className="h-[300px]">
                     <div className="space-y-4">
-                      {[
-                        {
-                          id: 1,
-                          user: "John Doe",
-                          message: "How do I reset my password?",
-                          time: "2 mins ago",
-                          status: "resolved",
-                        },
-                        {
-                          id: 2,
-                          user: "Sarah Smith",
-                          message: "What are your business hours?",
-                          time: "15 mins ago",
-                          status: "resolved",
-                        },
-                        {
-                          id: 3,
-                          user: "Michael Brown",
-                          message: "Do you offer international shipping?",
-                          time: "1 hour ago",
-                          status: "resolved",
-                        },
-                        {
-                          id: 4,
-                          user: "Emily Johnson",
-                          message: "I need help with my recent order #45678",
-                          time: "3 hours ago",
-                          status: "pending",
-                        },
-                        {
-                          id: 5,
-                          user: "David Wilson",
-                          message: "How long does delivery take?",
-                          time: "5 hours ago",
-                          status: "resolved",
-                        },
-                      ].map((conversation) => (
-                        <div
-                          key={conversation.id}
-                          className="flex items-start gap-4 p-3 rounded-lg hover:bg-accent"
-                        >
-                          <Avatar className="h-8 w-8">
-                            <AvatarImage
-                              src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${conversation.user}`}
-                              alt={conversation.user}
-                            />
-                            <AvatarFallback>
-                              {conversation.user
-                                .split(" ")
-                                .map((n) => n[0])
-                                .join("")}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div className="flex-1">
-                            <div className="flex items-center justify-between">
-                              <p className="font-medium">{conversation.user}</p>
-                              <span className="text-xs text-muted-foreground">
-                                {conversation.time}
-                              </span>
-                            </div>
-                            <p className="text-sm text-muted-foreground">
-                              {conversation.message}
-                            </p>
-                          </div>
-                          <Badge
-                            variant={
-                              conversation.status === "resolved"
-                                ? "secondary"
-                                : "outline"
-                            }
+                      {DEMO_CONVERSATIONS.length > 0 ? (
+                        DEMO_CONVERSATIONS.map((conversation) => (
+                          <div
+                            key={conversation.id}
+                            className="flex items-start gap-4 p-3 rounded-lg hover:bg-accent"
                           >
-                            {conversation.status}
-                          </Badge>
+                            <Avatar className="h-8 w-8">
+                              <AvatarImage
+                                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${conversation.user}`}
+                                alt={conversation.user}
+                              />
+                              <AvatarFallback>
+                                {conversation.user
+                                  .split(" ")
+                                  .map((n) => n[0])
+                                  .join("")}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1">
+                              <div className="flex items-center justify-between">
+                                <p className="font-medium">{conversation.user}</p>
+                                <span className="text-xs text-muted-foreground">
+                                  {conversation.time}
+                                </span>
+                              </div>
+                              <p className="text-sm text-muted-foreground">
+                                {conversation.message}
+                              </p>
+                            </div>
+                            <Badge
+                              variant={
+                                conversation.status === "resolved"
+                                  ? "secondary"
+                                  : "outline"
+                              }
+                            >
+                              {conversation.status}
+                            </Badge>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="text-center py-8">
+                          <p className="text-muted-foreground">No conversations yet</p>
                         </div>
-                      ))}
+                      )}
                     </div>
                   </ScrollArea>
                 </CardContent>
@@ -476,7 +525,7 @@ export default function AdminDashboard({
                   <CardContent>
                     <div className="bg-accent/50 p-4 rounded-md">
                       <code className="text-sm">
-                        {`<script src="https://cdn.example.com/chat-widget.js" data-widget-id="${Math.random().toString(36).substring(2, 10)}"></script>`}
+                        {`<script src="https://cdn.example.com/chat-widget.js" data-widget-id="your-widget-id"></script>`}
                       </code>
                     </div>
                     <p className="text-sm text-muted-foreground mt-2">
@@ -614,8 +663,8 @@ export default function AdminDashboard({
                 <CardContent>
                   <Textarea
                     className="min-h-[200px]"
-                    placeholder="You are a helpful customer support assistant for [Company Name]. You are friendly, concise, and accurate. You help customers with their questions about products, orders, and services. If you don't know the answer, you politely say so and offer to connect them with a human agent."
-                    defaultValue="You are a helpful customer support assistant for ACME Inc. You are friendly, concise, and accurate. You help customers with their questions about products, orders, and services. If you don't know the answer, you politely say so and offer to connect them with a human agent."
+                    placeholder="You are a helpful customer support assistant. You are friendly, concise, and accurate. You help customers with their questions about products, orders, and services. If you don't know the answer, you politely say so and offer to connect them with a human agent."
+                    defaultValue="You are a helpful customer support assistant. You are friendly, concise, and accurate. You help customers with their questions about products, orders, and services. If you don't know the answer, you politely say so and offer to connect them with a human agent."
                   />
                   <div className="flex justify-end mt-4">
                     <Button>Save System Prompt</Button>
@@ -650,81 +699,37 @@ export default function AdminDashboard({
 
                       <ScrollArea className="h-[400px]">
                         <div className="space-y-2">
-                          {[
-                            {
-                              id: 1,
-                              title: "Product Catalog.pdf",
-                              size: "2.4 MB",
-                              date: "2023-05-15",
-                              status: "processed",
-                            },
-                            {
-                              id: 2,
-                              title: "Return Policy.docx",
-                              size: "0.8 MB",
-                              date: "2023-06-22",
-                              status: "processed",
-                            },
-                            {
-                              id: 3,
-                              title: "FAQ.md",
-                              size: "0.3 MB",
-                              date: "2023-07-10",
-                              status: "processed",
-                            },
-                            {
-                              id: 4,
-                              title: "Shipping Information.pdf",
-                              size: "1.2 MB",
-                              date: "2023-08-05",
-                              status: "processed",
-                            },
-                            {
-                              id: 5,
-                              title: "Terms of Service.pdf",
-                              size: "3.1 MB",
-                              date: "2023-09-18",
-                              status: "processing",
-                            },
-                            {
-                              id: 6,
-                              title: "Product Manual.pdf",
-                              size: "5.7 MB",
-                              date: "2023-10-03",
-                              status: "processed",
-                            },
-                            {
-                              id: 7,
-                              title: "Troubleshooting Guide.docx",
-                              size: "1.5 MB",
-                              date: "2023-11-12",
-                              status: "processed",
-                            },
-                          ].map((doc) => (
-                            <div
-                              key={doc.id}
-                              className="flex items-center justify-between p-3 border rounded-lg hover:bg-accent"
-                            >
-                              <div className="flex items-center gap-3">
-                                <FileText className="h-5 w-5 text-muted-foreground" />
-                                <div>
-                                  <p className="font-medium">{doc.title}</p>
-                                  <p className="text-xs text-muted-foreground">
-                                    {doc.size} • {doc.date}
-                                  </p>
-                                </div>
-                              </div>
-                              <Badge
-                                variant={
-                                  doc.status === "processed"
-                                    ? "secondary"
-                                    : "outline"
-                                }
+                          {DEMO_DOCUMENTS.length > 0 ? (
+                            DEMO_DOCUMENTS.map((doc) => (
+                              <div
+                                key={doc.id}
+                                className="flex items-center justify-between p-3 border rounded-lg hover:bg-accent"
                               >
-                                {doc.status}
-                              </Badge>
+                                <div className="flex items-center gap-3">
+                                  <FileText className="h-5 w-5 text-muted-foreground" />
+                                  <div>
+                                    <p className="font-medium">{doc.title}</p>
+                                    <p className="text-xs text-muted-foreground">
+                                      {doc.size} • {doc.date}
+                                    </p>
+                                  </div>
+                                </div>
+                                <Badge
+                                  variant={
+                                    doc.status === "processed"
+                                      ? "secondary"
+                                      : "outline"
+                                  }
+                                >
+                                  {doc.status}
+                                </Badge>
+                              </div>
+                            ))
+                          ) : (
+                            <div className="text-center py-8">
+                              <p className="text-muted-foreground">No documents uploaded yet</p>
                             </div>
-                          ))}
+                          )}
                         </div>
                       </ScrollArea>
                     </div>
@@ -745,24 +750,24 @@ export default function AdminDashboard({
                           Storage Used
                         </span>
                         <span className="text-sm text-muted-foreground">
-                          15.1 MB / 100 MB
+                          0 MB / 100 MB
                         </span>
                       </div>
-                      <Progress value={15} />
+                      <Progress value={0} />
                     </div>
 
                     <div className="space-y-4">
                       <div className="flex justify-between">
                         <span className="text-sm">Total Documents</span>
-                        <span className="font-medium">7</span>
+                        <span className="font-medium">{DEMO_DOCUMENTS.length}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-sm">Indexed Pages</span>
-                        <span className="font-medium">42</span>
+                        <span className="font-medium">0</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-sm">Last Updated</span>
-                        <span className="font-medium">Today, 10:23 AM</span>
+                        <span className="font-medium">Never</span>
                       </div>
                     </div>
 
@@ -804,131 +809,6 @@ export default function AdminDashboard({
                   </div>
                 </CardContent>
               </Card>
-
-              <div className="grid gap-6 md:grid-cols-2">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Saved Flows</CardTitle>
-                    <CardDescription>
-                      Your existing prompt flows
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ScrollArea className="h-[300px]">
-                      <div className="space-y-2">
-                        {[
-                          {
-                            id: 1,
-                            name: "Customer Support Flow",
-                            updated: "2 days ago",
-                            nodes: 8,
-                          },
-                          {
-                            id: 2,
-                            name: "Product Recommendation",
-                            updated: "1 week ago",
-                            nodes: 12,
-                          },
-                          {
-                            id: 3,
-                            name: "Order Tracking",
-                            updated: "2 weeks ago",
-                            nodes: 6,
-                          },
-                          {
-                            id: 4,
-                            name: "Account Creation",
-                            updated: "1 month ago",
-                            nodes: 5,
-                          },
-                        ].map((flow) => (
-                          <div
-                            key={flow.id}
-                            className="flex items-center justify-between p-3 border rounded-lg hover:bg-accent"
-                          >
-                            <div>
-                              <p className="font-medium">{flow.name}</p>
-                              <p className="text-xs text-muted-foreground">
-                                Updated {flow.updated} • {flow.nodes} nodes
-                              </p>
-                            </div>
-                            <Button variant="ghost" size="sm">
-                              <ChevronRight className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        ))}
-                      </div>
-                    </ScrollArea>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Templates</CardTitle>
-                    <CardDescription>
-                      Start with pre-built prompt flows
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ScrollArea className="h-[300px]">
-                      <div className="space-y-2">
-                        {[
-                          {
-                            id: 1,
-                            name: "Basic Customer Support",
-                            complexity: "Simple",
-                            category: "Support",
-                          },
-                          {
-                            id: 2,
-                            name: "E-commerce Assistant",
-                            complexity: "Advanced",
-                            category: "Sales",
-                          },
-                          {
-                            id: 3,
-                            name: "FAQ Bot",
-                            complexity: "Simple",
-                            category: "Information",
-                          },
-                          {
-                            id: 4,
-                            name: "Lead Generation",
-                            complexity: "Medium",
-                            category: "Marketing",
-                          },
-                          {
-                            id: 5,
-                            name: "Appointment Booking",
-                            complexity: "Medium",
-                            category: "Scheduling",
-                          },
-                        ].map((template) => (
-                          <div
-                            key={template.id}
-                            className="flex items-center justify-between p-3 border rounded-lg hover:bg-accent"
-                          >
-                            <div>
-                              <p className="font-medium">{template.name}</p>
-                              <div className="flex gap-2 mt-1">
-                                <Badge variant="outline" className="text-xs">
-                                  {template.complexity}
-                                </Badge>
-                                <Badge variant="secondary" className="text-xs">
-                                  {template.category}
-                                </Badge>
-                              </div>
-                            </div>
-                            <Button variant="outline" size="sm">
-                              Use
-                            </Button>
-                          </div>
-                        ))}
-                      </div>
-                    </ScrollArea>
-                  </CardContent>
-                </Card>
-              </div>
             </TabsContent>
 
             <TabsContent value="analytics" className="space-y-4">
@@ -942,9 +822,9 @@ export default function AdminDashboard({
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">78%</div>
+                    <div className="text-2xl font-bold">--</div>
                     <p className="text-xs text-muted-foreground mt-1">
-                      +5% from last month
+                      No data available
                     </p>
                   </CardContent>
                 </Card>
@@ -955,9 +835,9 @@ export default function AdminDashboard({
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">4:32</div>
+                    <div className="text-2xl font-bold">--</div>
                     <p className="text-xs text-muted-foreground mt-1">
-                      +0:45 from last month
+                      No data available
                     </p>
                   </CardContent>
                 </Card>
@@ -968,9 +848,9 @@ export default function AdminDashboard({
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">92%</div>
+                    <div className="text-2xl font-bold">--</div>
                     <p className="text-xs text-muted-foreground mt-1">
-                      +3% from last month
+                      No data available
                     </p>
                   </CardContent>
                 </Card>
@@ -986,145 +866,12 @@ export default function AdminDashboard({
                     <div className="text-center">
                       <BarChart3 className="h-12 w-12 mx-auto text-muted-foreground" />
                       <p className="text-sm text-muted-foreground mt-2">
-                        Analytics visualization would appear here
+                        Analytics visualization will appear here when data is available
                       </p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-
-              <div className="grid gap-6 md:grid-cols-2">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Top Questions</CardTitle>
-                    <CardDescription>
-                      Most frequently asked questions
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ScrollArea className="h-[200px]">
-                      <div className="space-y-4">
-                        {[
-                          {
-                            id: 1,
-                            question: "How do I track my order?",
-                            count: 156,
-                          },
-                          {
-                            id: 2,
-                            question: "What is your return policy?",
-                            count: 124,
-                          },
-                          {
-                            id: 3,
-                            question: "Do you ship internationally?",
-                            count: 98,
-                          },
-                          {
-                            id: 4,
-                            question: "How long does shipping take?",
-                            count: 87,
-                          },
-                          {
-                            id: 5,
-                            question: "How do I reset my password?",
-                            count: 72,
-                          },
-                        ].map((item, index) => (
-                          <div
-                            key={item.id}
-                            className="flex items-center justify-between"
-                          >
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm font-medium text-muted-foreground">
-                                {index + 1}.
-                              </span>
-                              <span className="text-sm">{item.question}</span>
-                            </div>
-                            <Badge variant="secondary">{item.count}</Badge>
-                          </div>
-                        ))}
-                      </div>
-                    </ScrollArea>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>User Feedback</CardTitle>
-                    <CardDescription>
-                      Recent ratings and comments
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ScrollArea className="h-[200px]">
-                      <div className="space-y-4">
-                        {[
-                          {
-                            id: 1,
-                            rating: 5,
-                            comment: "Very helpful and quick responses!",
-                            date: "Today",
-                          },
-                          {
-                            id: 2,
-                            rating: 4,
-                            comment: "Answered my question accurately.",
-                            date: "Yesterday",
-                          },
-                          {
-                            id: 3,
-                            rating: 5,
-                            comment: "Saved me a lot of time, thank you!",
-                            date: "2 days ago",
-                          },
-                          {
-                            id: 4,
-                            rating: 3,
-                            comment:
-                              "Helpful but took a few tries to understand my question.",
-                            date: "3 days ago",
-                          },
-                          {
-                            id: 5,
-                            rating: 5,
-                            comment: "Excellent service, very impressed!",
-                            date: "1 week ago",
-                          },
-                        ].map((feedback) => (
-                          <div key={feedback.id} className="space-y-1">
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center">
-                                {Array(5)
-                                  .fill(0)
-                                  .map((_, i) => (
-                                    <svg
-                                      key={i}
-                                      className={`h-4 w-4 ${i < feedback.rating ? "text-yellow-400" : "text-muted-foreground/30"}`}
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      viewBox="0 0 24 24"
-                                      fill="currentColor"
-                                    >
-                                      <path
-                                        fillRule="evenodd"
-                                        d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                                        clipRule="evenodd"
-                                      />
-                                    </svg>
-                                  ))}
-                              </div>
-                              <span className="text-xs text-muted-foreground">
-                                {feedback.date}
-                              </span>
-                            </div>
-                            <p className="text-sm">"{feedback.comment}"</p>
-                          </div>
-                        ))}
-                      </div>
-                    </ScrollArea>
-                  </CardContent>
-                </Card>
-              </div>
             </TabsContent>
 
             <TabsContent value="settings" className="space-y-4">
@@ -1208,58 +955,45 @@ export default function AdminDashboard({
 
                     <ScrollArea className="h-[200px]">
                       <div className="space-y-4">
-                        {[
-                          {
-                            id: 1,
-                            name: "John Smith",
-                            email: "john@example.com",
-                            role: "Admin",
-                          },
-                          {
-                            id: 2,
-                            name: "Sarah Johnson",
-                            email: "sarah@example.com",
-                            role: "Editor",
-                          },
-                          {
-                            id: 3,
-                            name: "Michael Brown",
-                            email: "michael@example.com",
-                            role: "Viewer",
-                          },
-                        ].map((member) => (
-                          <div
-                            key={member.id}
-                            className="flex items-center justify-between p-3 border rounded-lg"
-                          >
-                            <div className="flex items-center gap-3">
-                              <Avatar className="h-8 w-8">
-                                <AvatarImage
-                                  src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${member.name}`}
-                                  alt={member.name}
-                                />
-                                <AvatarFallback>
-                                  {member.name
-                                    .split(" ")
-                                    .map((n) => n[0])
-                                    .join("")}
-                                </AvatarFallback>
-                              </Avatar>
-                              <div>
-                                <p className="font-medium">{member.name}</p>
-                                <p className="text-xs text-muted-foreground">
-                                  {member.email}
-                                </p>
+                        {DEMO_TEAM_MEMBERS.length > 0 ? (
+                          DEMO_TEAM_MEMBERS.map((member) => (
+                            <div
+                              key={member.id}
+                              className="flex items-center justify-between p-3 border rounded-lg"
+                            >
+                              <div className="flex items-center gap-3">
+                                <Avatar className="h-8 w-8">
+                                  <AvatarImage
+                                    src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${member.name}`}
+                                    alt={member.name}
+                                  />
+                                  <AvatarFallback>
+                                    {member.name
+                                      .split(" ")
+                                      .map((n) => n[0])
+                                      .join("")}
+                                  </AvatarFallback>
+                                </Avatar>
+                                <div>
+                                  <p className="font-medium">{member.name}</p>
+                                  <p className="text-xs text-muted-foreground">
+                                    {member.email}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Badge variant="outline">{member.role}</Badge>
+                                <Button variant="ghost" size="sm">
+                                  <ChevronRight className="h-4 w-4" />
+                                </Button>
                               </div>
                             </div>
-                            <div className="flex items-center gap-2">
-                              <Badge variant="outline">{member.role}</Badge>
-                              <Button variant="ghost" size="sm">
-                                <ChevronRight className="h-4 w-4" />
-                              </Button>
-                            </div>
+                          ))
+                        ) : (
+                          <div className="text-center py-8">
+                            <p className="text-muted-foreground">No team members yet</p>
                           </div>
-                        ))}
+                        )}
                       </div>
                     </ScrollArea>
                   </div>
@@ -1267,8 +1001,8 @@ export default function AdminDashboard({
               </Card>
             </TabsContent>
           </Tabs>
-        </div>
+        </main>
       </div>
-    </AdminLayout>
+    </div>
   );
 }

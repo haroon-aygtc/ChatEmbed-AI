@@ -34,8 +34,6 @@ export default function Home() {
           </Button>
         </Link>
       </div>
-
-      <div className="w-[800px] h-[600px]"></div>
     </div>
   );
 }
