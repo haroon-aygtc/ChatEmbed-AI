@@ -48,6 +48,12 @@ import {
   User,
   Users,
   Zap,
+  Search,
+  Command,
+  Sparkles,
+  Activity,
+  Shield,
+  Palette,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -67,48 +73,56 @@ const sidebarItems = [
     href: "/admin",
     icon: Layout,
     badge: null,
+    description: "Dashboard overview",
   },
   {
     title: "Widget Builder",
     href: "/admin/widget",
-    icon: Code,
+    icon: Palette,
     badge: "New",
+    description: "Customize widget appearance",
   },
   {
     title: "AI Configuration",
     href: "/admin/ai-config",
-    icon: Zap,
+    icon: Sparkles,
     badge: null,
+    description: "Configure AI models",
   },
   {
     title: "Knowledge Base",
     href: "/admin/knowledge-base",
     icon: Book,
     badge: null,
+    description: "Manage content library",
   },
   {
     title: "Prompt Flow",
     href: "/admin/prompt-flow",
     icon: FileText,
     badge: "Beta",
+    description: "Design conversation flows",
   },
   {
     title: "Analytics",
     href: "/admin/analytics",
     icon: BarChart3,
     badge: null,
+    description: "Performance insights",
   },
   {
     title: "Team",
     href: "/admin/team",
     icon: Users,
     badge: null,
+    description: "Manage team members",
   },
   {
     title: "Settings",
     href: "/admin/settings",
     icon: Settings,
     badge: null,
+    description: "System configuration",
   },
 ];
 
@@ -128,24 +142,38 @@ export function AdminLayout({
 
   return (
     <TooltipProvider>
-      <div className="flex h-screen bg-background">
-        {/* Sidebar */}
+      <div className="flex h-screen bg-gray-50/50 dark:bg-gray-950/50">
+        {/* Enhanced Sidebar */}
         <aside
           className={cn(
-            "flex flex-col border-r bg-card transition-all duration-300 ease-in-out",
-            sidebarCollapsed ? "w-16" : "w-64",
+            "flex flex-col bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 transition-all duration-300 ease-in-out shadow-sm",
+            sidebarCollapsed ? "w-16" : "w-72",
           )}
         >
-          {/* Logo */}
-          <div className="flex h-16 items-center border-b px-4">
+          {/* Logo Section */}
+          <div className="flex h-16 items-center border-b border-gray-200 dark:border-gray-800 px-4">
             {!sidebarCollapsed ? (
-              <Link href="/admin" className="flex items-center space-x-2">
-                <MessageSquare className="h-6 w-6 text-primary" />
-                <span className="text-lg font-semibold">ChatWidget</span>
+              <Link href="/admin" className="flex items-center space-x-3 group">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 text-white shadow-sm group-hover:shadow-md transition-shadow">
+                  <MessageSquare className="h-4 w-4" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                    ChatWidget
+                  </span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    Admin Panel
+                  </span>
+                </div>
               </Link>
             ) : (
-              <Link href="/admin" className="flex items-center justify-center">
-                <MessageSquare className="h-6 w-6 text-primary" />
+              <Link
+                href="/admin"
+                className="flex items-center justify-center group"
+              >
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 text-white shadow-sm group-hover:shadow-md transition-shadow">
+                  <MessageSquare className="h-4 w-4" />
+                </div>
               </Link>
             )}
           </div>
@@ -159,23 +187,47 @@ export function AdminLayout({
 
                 const buttonContent = (
                   <Button
-                    variant={isActive ? "secondary" : "ghost"}
+                    variant="ghost"
                     className={cn(
-                      "w-full justify-start gap-3 h-10",
+                      "w-full justify-start gap-3 h-11 px-3 text-left font-medium transition-all duration-200",
                       sidebarCollapsed && "justify-center px-2",
-                      isActive && "bg-secondary/80 text-secondary-foreground",
+                      isActive
+                        ? "bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 border-r-2 border-blue-600 shadow-sm"
+                        : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white",
                     )}
                     asChild
                   >
-                    <Link href={item.href}>
-                      <Icon className="h-4 w-4 shrink-0" />
+                    <Link href={item.href} className="group">
+                      <div
+                        className={cn(
+                          "flex h-5 w-5 items-center justify-center transition-colors",
+                          isActive
+                            ? "text-blue-600 dark:text-blue-400"
+                            : "text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300",
+                        )}
+                      >
+                        <Icon className="h-5 w-5" />
+                      </div>
                       {!sidebarCollapsed && (
                         <>
-                          <span className="flex-1 text-left">{item.title}</span>
+                          <div className="flex-1 flex flex-col">
+                            <span className="text-sm">{item.title}</span>
+                            <span className="text-xs text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300">
+                              {item.description}
+                            </span>
+                          </div>
                           {item.badge && (
                             <Badge
-                              variant="outline"
-                              className="ml-auto text-xs"
+                              variant={
+                                item.badge === "New" ? "default" : "secondary"
+                              }
+                              className={cn(
+                                "ml-auto text-xs px-2 py-0.5",
+                                item.badge === "New" &&
+                                  "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300",
+                                item.badge === "Beta" &&
+                                  "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300",
+                              )}
                             >
                               {item.badge}
                             </Badge>
@@ -188,10 +240,18 @@ export function AdminLayout({
 
                 if (sidebarCollapsed) {
                   return (
-                    <Tooltip key={item.href}>
+                    <Tooltip key={item.href} delayDuration={0}>
                       <TooltipTrigger asChild>{buttonContent}</TooltipTrigger>
-                      <TooltipContent side="right">
-                        <p>{item.title}</p>
+                      <TooltipContent side="right" className="flex flex-col">
+                        <p className="font-medium">{item.title}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {item.description}
+                        </p>
+                        {item.badge && (
+                          <Badge variant="outline" className="text-xs mt-1">
+                            {item.badge}
+                          </Badge>
+                        )}
                       </TooltipContent>
                     </Tooltip>
                   );
@@ -203,13 +263,13 @@ export function AdminLayout({
           </ScrollArea>
 
           {/* Collapse Button */}
-          <div className="border-t p-3">
+          <div className="border-t border-gray-200 dark:border-gray-800 p-3">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
               className={cn(
-                "w-full",
+                "w-full transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800",
                 sidebarCollapsed ? "justify-center px-2" : "justify-start",
               )}
             >
@@ -218,7 +278,7 @@ export function AdminLayout({
               ) : (
                 <>
                   <ChevronLeft className="h-4 w-4 mr-2" />
-                  <span>Collapse</span>
+                  <span className="text-sm">Collapse</span>
                 </>
               )}
             </Button>
@@ -227,9 +287,9 @@ export function AdminLayout({
 
         {/* Main Content */}
         <div className="flex flex-1 flex-col overflow-hidden">
-          {/* Header */}
-          <header className="flex h-16 items-center justify-between border-b bg-background px-6">
-            <div className="flex items-center space-x-4">
+          {/* Enhanced Header */}
+          <header className="flex h-16 items-center justify-between border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-6 shadow-sm">
+            <div className="flex items-center space-x-6">
               {/* Breadcrumbs */}
               <Breadcrumb>
                 <BreadcrumbList>
@@ -237,57 +297,92 @@ export function AdminLayout({
                     <React.Fragment key={index}>
                       <BreadcrumbItem>
                         {index === defaultBreadcrumbs.length - 1 ? (
-                          <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
+                          <BreadcrumbPage className="font-medium text-gray-900 dark:text-white">
+                            {crumb.label}
+                          </BreadcrumbPage>
                         ) : (
                           <BreadcrumbLink
                             href={crumb.href || "#"}
-                            className="transition-colors hover:text-foreground"
+                            className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
                           >
                             {crumb.label}
                           </BreadcrumbLink>
                         )}
                       </BreadcrumbItem>
                       {index < defaultBreadcrumbs.length - 1 && (
-                        <BreadcrumbSeparator />
+                        <BreadcrumbSeparator className="text-gray-400" />
                       )}
                     </React.Fragment>
                   ))}
                 </BreadcrumbList>
               </Breadcrumb>
+
+              {/* Quick Search */}
+              <div className="hidden md:flex">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-64 justify-start text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
+                >
+                  <Search className="h-4 w-4 mr-2" />
+                  <span>Search...</span>
+                  <div className="ml-auto flex items-center space-x-1">
+                    <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                      <Command className="h-3 w-3" />
+                    </kbd>
+                    <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                      K
+                    </kbd>
+                  </div>
+                </Button>
+              </div>
             </div>
 
             {/* Header Actions */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3">
               <ThemeSwitcher />
 
-              <Button variant="ghost" size="sm" className="relative">
+              {/* Notifications */}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="relative hover:bg-gray-100 dark:hover:bg-gray-800"
+              >
                 <Bell className="h-4 w-4" />
                 <Badge
                   variant="destructive"
-                  className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs"
+                  className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs flex items-center justify-center"
                 >
                   3
                 </Badge>
               </Button>
 
-              <Button variant="ghost" size="sm">
+              {/* Help */}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="hover:bg-gray-100 dark:hover:bg-gray-800"
+              >
                 <HelpCircle className="h-4 w-4" />
               </Button>
 
               <Separator orientation="vertical" className="h-6" />
 
+              {/* User Menu */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
-                    className="relative h-8 w-8 rounded-full"
+                    className="relative h-9 w-9 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
                   >
                     <Avatar className="h-8 w-8">
                       <AvatarImage
                         src="https://api.dicebear.com/7.x/avataaars/svg?seed=admin"
                         alt="Admin"
                       />
-                      <AvatarFallback>AD</AvatarFallback>
+                      <AvatarFallback className="bg-gradient-to-br from-blue-600 to-purple-600 text-white text-sm font-medium">
+                        AD
+                      </AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
@@ -303,16 +398,20 @@ export function AdminLayout({
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer">
                     <User className="mr-2 h-4 w-4" />
                     <span>Profile</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer">
                     <Cog className="mr-2 h-4 w-4" />
                     <span>Settings</span>
                   </DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer">
+                    <Shield className="mr-2 h-4 w-4" />
+                    <span>Security</span>
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer text-red-600 dark:text-red-400">
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Log out</span>
                   </DropdownMenuItem>
@@ -322,18 +421,32 @@ export function AdminLayout({
           </header>
 
           {/* Page Content */}
-          <main className="flex-1 overflow-auto">
-            <div className="container mx-auto p-6">
+          <main className="flex-1 overflow-auto bg-gray-50/50 dark:bg-gray-950/50">
+            <div className="container mx-auto p-6 max-w-7xl">
               {/* Page Header */}
               <div className="mb-8">
-                <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
-                {description && (
-                  <p className="text-muted-foreground mt-2">{description}</p>
-                )}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+                      {title}
+                    </h1>
+                    {description && (
+                      <p className="text-gray-600 dark:text-gray-400 mt-2 text-lg">
+                        {description}
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Badge variant="outline" className="text-xs">
+                      <Activity className="h-3 w-3 mr-1" />
+                      Live
+                    </Badge>
+                  </div>
+                </div>
               </div>
 
               {/* Page Content */}
-              {children}
+              <div className="space-y-6">{children}</div>
             </div>
           </main>
         </div>
