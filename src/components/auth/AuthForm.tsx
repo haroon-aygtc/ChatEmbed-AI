@@ -163,7 +163,7 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
                 {...field}
                 type={showState ? "text" : "password"}
                 className={cn(
-                  "pr-10",
+                  "pr-10 h-12 text-base",
                   fieldState.error &&
                     "border-destructive focus-visible:ring-destructive",
                   !fieldState.error &&
@@ -213,6 +213,7 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
                     <Input
                       {...field}
                       className={cn(
+                        "h-12 text-base",
                         fieldState.error &&
                           "border-destructive focus-visible:ring-destructive",
                         !fieldState.error &&
@@ -244,6 +245,7 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
                     {...field}
                     type="email"
                     className={cn(
+                      "h-12 text-base",
                       fieldState.error &&
                         "border-destructive focus-visible:ring-destructive",
                       !fieldState.error &&
@@ -278,7 +280,11 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
               setShowConfirmPassword,
             )}
 
-          <Button type="submit" className="w-full" disabled={isLoading}>
+          <Button
+            type="submit"
+            className="w-full h-12 text-base"
+            disabled={isLoading}
+          >
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {getButtonText()}
           </Button>
