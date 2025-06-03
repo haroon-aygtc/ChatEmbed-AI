@@ -117,6 +117,14 @@ const sidebarItems = [
     description: "Performance insights",
   },
   {
+    title: "User Management",
+    href: "/admin?section=user-management",
+    section: "user-management",
+    icon: Users,
+    badge: "New",
+    description: "Manage users, roles & permissions",
+  },
+  {
     title: "Team",
     href: "/admin?section=team",
     section: "team",
@@ -260,7 +268,9 @@ export function AdminLayout({
                   </TooltipTrigger>
                   <TooltipContent side="right" className="flex flex-col">
                     <p className="font-medium">Admin User</p>
-                    <p className="text-xs text-muted-foreground">admin@chatwidget.com</p>
+                    <p className="text-xs text-muted-foreground">
+                      admin@chatwidget.com
+                    </p>
                   </TooltipContent>
                 </Tooltip>
 
@@ -341,13 +351,19 @@ export function AdminLayout({
                       <div
                         className={cn(
                           "flex items-center justify-center transition-colors rounded-lg p-1",
-                          sidebarCollapsed ? "h-8 w-8 mx-auto" : "h-7 w-7 p-1.5",
+                          sidebarCollapsed
+                            ? "h-8 w-8 mx-auto"
+                            : "h-7 w-7 p-1.5",
                           isActive
                             ? "text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30"
                             : "text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300 group-hover:bg-gray-100 dark:group-hover:bg-gray-700/50",
                         )}
                       >
-                        <Icon className={cn(sidebarCollapsed ? "h-5 w-5" : "h-5 w-5")} />
+                        <Icon
+                          className={cn(
+                            sidebarCollapsed ? "h-5 w-5" : "h-5 w-5",
+                          )}
+                        />
                       </div>
                       {!sidebarCollapsed && (
                         <>
@@ -367,9 +383,9 @@ export function AdminLayout({
                               className={cn(
                                 "ml-3 text-xs px-2.5 py-1 font-medium rounded-full flex-shrink-0",
                                 item.badge === "New" &&
-                                "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300 border border-green-200 dark:border-green-800",
+                                  "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300 border border-green-200 dark:border-green-800",
                                 item.badge === "Beta" &&
-                                "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300 border border-orange-200 dark:border-orange-800",
+                                  "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300 border border-orange-200 dark:border-orange-800",
                               )}
                             >
                               {item.badge}
