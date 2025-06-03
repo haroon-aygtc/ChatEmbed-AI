@@ -75,7 +75,7 @@ export function DashboardPreview() {
               return (
                 <Card
                   key={stat.label}
-                  className="bg-background/50 backdrop-blur-sm"
+                  className="bg-card border border-border shadow-sm hover:shadow-md transition-all duration-300"
                 >
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium text-muted-foreground">
@@ -111,30 +111,41 @@ export function DashboardPreview() {
             viewport={{ once: true }}
           >
             <Tabs defaultValue="overview" className="w-full">
-              <TabsList className="grid w-full grid-cols-4 mb-6">
-                <TabsTrigger
-                  value="overview"
-                  className="flex items-center gap-2"
-                >
-                  <BarChart3 className="h-4 w-4" />
-                  <span className="hidden sm:inline">Overview</span>
-                </TabsTrigger>
-                <TabsTrigger value="widget" className="flex items-center gap-2">
-                  <Settings className="h-4 w-4" />
-                  <span className="hidden sm:inline">Widget</span>
-                </TabsTrigger>
-                <TabsTrigger value="ai" className="flex items-center gap-2">
-                  <MessageSquare className="h-4 w-4" />
-                  <span className="hidden sm:inline">AI Models</span>
-                </TabsTrigger>
-                <TabsTrigger value="kb" className="flex items-center gap-2">
-                  <Database className="h-4 w-4" />
-                  <span className="hidden sm:inline">Knowledge</span>
-                </TabsTrigger>
-              </TabsList>
+              <div className="flex items-center justify-center mb-6">
+                <TabsList className="grid w-full max-w-2xl grid-cols-4 h-12 p-1 bg-muted/50 backdrop-blur-sm">
+                  <TabsTrigger
+                    value="overview"
+                    className="h-10 text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200 flex items-center gap-2"
+                  >
+                    <BarChart3 className="h-4 w-4" />
+                    <span className="hidden sm:inline">Overview</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="widget"
+                    className="h-10 text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200 flex items-center gap-2"
+                  >
+                    <Settings className="h-4 w-4" />
+                    <span className="hidden sm:inline">Widget</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="ai"
+                    className="h-10 text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200 flex items-center gap-2"
+                  >
+                    <MessageSquare className="h-4 w-4" />
+                    <span className="hidden sm:inline">AI Models</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="kb"
+                    className="h-10 text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm transition-all duration-200 flex items-center gap-2"
+                  >
+                    <Database className="h-4 w-4" />
+                    <span className="hidden sm:inline">Knowledge</span>
+                  </TabsTrigger>
+                </TabsList>
+              </div>
 
               <TabsContent value="overview" className="space-y-4">
-                <Card className="bg-background/50 backdrop-blur-sm">
+                <Card className="bg-card border border-border shadow-sm hover:shadow-md transition-all duration-300">
                   <CardHeader>
                     <CardTitle>Analytics Dashboard</CardTitle>
                     <CardDescription>
@@ -143,7 +154,7 @@ export function DashboardPreview() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="aspect-video rounded-lg bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center border border-border/50">
+                    <div className="aspect-video rounded-lg bg-muted/10 flex items-center justify-center border border-border">
                       <div className="text-center space-y-2">
                         <BarChart3 className="h-12 w-12 mx-auto text-muted-foreground" />
                         <p className="text-sm text-muted-foreground">
@@ -156,7 +167,7 @@ export function DashboardPreview() {
               </TabsContent>
 
               <TabsContent value="widget" className="space-y-4">
-                <Card className="bg-background/50 backdrop-blur-sm">
+                <Card className="bg-card border border-border shadow-sm hover:shadow-md transition-all duration-300">
                   <CardHeader>
                     <CardTitle>Widget Customization</CardTitle>
                     <CardDescription>
@@ -165,7 +176,7 @@ export function DashboardPreview() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="aspect-video rounded-lg bg-gradient-to-br from-blue-500/10 to-purple-500/10 flex items-center justify-center border border-border/50">
+                    <div className="aspect-video rounded-lg bg-muted/10 flex items-center justify-center border border-border">
                       <div className="text-center space-y-2">
                         <Settings className="h-12 w-12 mx-auto text-muted-foreground" />
                         <p className="text-sm text-muted-foreground">
@@ -178,7 +189,7 @@ export function DashboardPreview() {
               </TabsContent>
 
               <TabsContent value="ai" className="space-y-4">
-                <Card className="bg-background/50 backdrop-blur-sm">
+                <Card className="bg-card border border-border shadow-sm hover:shadow-md transition-all duration-300">
                   <CardHeader>
                     <CardTitle>AI Model Configuration</CardTitle>
                     <CardDescription>
@@ -186,7 +197,7 @@ export function DashboardPreview() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="aspect-video rounded-lg bg-gradient-to-br from-green-500/10 to-teal-500/10 flex items-center justify-center border border-border/50">
+                    <div className="aspect-video rounded-lg bg-muted/10 flex items-center justify-center border border-border">
                       <div className="text-center space-y-2">
                         <MessageSquare className="h-12 w-12 mx-auto text-muted-foreground" />
                         <p className="text-sm text-muted-foreground">
@@ -199,7 +210,7 @@ export function DashboardPreview() {
               </TabsContent>
 
               <TabsContent value="kb" className="space-y-4">
-                <Card className="bg-background/50 backdrop-blur-sm">
+                <Card className="bg-card border border-border shadow-sm hover:shadow-md transition-all duration-300">
                   <CardHeader>
                     <CardTitle>Knowledge Base Management</CardTitle>
                     <CardDescription>
@@ -208,7 +219,7 @@ export function DashboardPreview() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="aspect-video rounded-lg bg-gradient-to-br from-orange-500/10 to-red-500/10 flex items-center justify-center border border-border/50">
+                    <div className="aspect-video rounded-lg bg-muted/10 flex items-center justify-center border border-border">
                       <div className="text-center space-y-2">
                         <Database className="h-12 w-12 mx-auto text-muted-foreground" />
                         <p className="text-sm text-muted-foreground">

@@ -121,7 +121,7 @@ export function TestimonialsSection() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <Card className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:shadow-lg transition-all duration-300">
+              <Card className="h-full bg-card border border-border shadow-sm hover:shadow-lg transition-all duration-300">
                 <CardContent className="p-6">
                   {/* Rating */}
                   <div className="flex items-center space-x-1 mb-4">

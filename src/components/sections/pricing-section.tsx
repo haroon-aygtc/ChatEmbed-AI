@@ -150,7 +150,7 @@ export function PricingSection() {
                 viewport={{ once: true }}
               >
                 <Card
-                  className={`relative h-full bg-background/50 backdrop-blur-sm border-border/50 transition-all duration-300 hover:shadow-lg ${
+                  className={`relative h-full bg-card border border-border shadow-sm transition-all duration-300 hover:shadow-lg ${
                     plan.popular
                       ? "ring-2 ring-primary scale-105"
                       : "hover:scale-[1.02]"

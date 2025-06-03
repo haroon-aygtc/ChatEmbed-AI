@@ -132,7 +132,7 @@ export function FeaturesSection() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Card className="relative h-full bg-background/50 backdrop-blur-sm border-border/50 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                <Card className="relative h-full bg-card border border-border shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
                   <CardHeader className="pb-4">
                     <div className="flex items-center justify-between mb-2">
                       <Icon className={`h-6 w-6 ${feature.color}`} />
