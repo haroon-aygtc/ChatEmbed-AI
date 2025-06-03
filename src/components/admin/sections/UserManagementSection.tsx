@@ -48,11 +48,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Switch } from "@/components/ui/switch";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/use-toast";
 import {
   Users,
@@ -65,15 +63,7 @@ import {
   UserX,
   Search,
   Filter,
-  MoreHorizontal,
-  Mail,
-  Phone,
-  Calendar,
-  Settings,
-  Eye,
-  EyeOff,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 interface User {
   id: string;
@@ -245,7 +235,6 @@ function UserManagement() {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
 
   const filteredUsers = users.filter((user) => {
     const matchesSearch =
@@ -314,12 +303,12 @@ function UserManagement() {
     const updatedUsers = users.map((user) =>
       user.id === userId
         ? {
-            ...user,
-            status:
-              user.status === "active"
-                ? "inactive"
-                : ("active" as "active" | "inactive" | "suspended"),
-          }
+          ...user,
+          status:
+            user.status === "active"
+              ? "inactive"
+              : ("active" as "active" | "inactive" | "suspended"),
+        }
         : user,
     );
     setUsers(updatedUsers);

@@ -8,6 +8,7 @@ import { KnowledgeBaseSection } from "@/components/admin/sections/KnowledgeBaseS
 import { PromptFlowSection } from "@/components/admin/sections/PromptFlowSection";
 import { AnalyticsSection } from "@/components/admin/sections/AnalyticsSection";
 import { TeamSection } from "@/components/admin/sections/TeamSection";
+import { UserManagementSection } from "@/components/admin/sections/UserManagementSection";
 import { SettingsSection } from "@/components/admin/sections/SettingsSection";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
@@ -39,6 +40,8 @@ function AdminDashboardContent({
         return <AnalyticsSection />;
       case "team":
         return <TeamSection />;
+      case "user-management":
+        return <UserManagementSection />;
       case "settings":
         return <SettingsSection />;
       default:
@@ -62,6 +65,8 @@ function AdminDashboardContent({
         return "Analytics & Insights";
       case "team":
         return "Team Management";
+      case "user-management":
+        return "User Management";
       case "settings":
         return "System Settings";
       default:
@@ -85,6 +90,8 @@ function AdminDashboardContent({
         return "Analyze chat performance and user engagement metrics";
       case "team":
         return "Manage team members and access permissions";
+      case "user-management":
+        return "Manage users, roles, and permissions across the system";
       case "settings":
         return "Configure system-wide settings and preferences";
       default:
@@ -101,6 +108,7 @@ function AdminDashboardContent({
       "prompt-flow": "Prompt Flow",
       analytics: "Analytics",
       team: "Team",
+      "user-management": "User Management",
       settings: "Settings",
     };
 
