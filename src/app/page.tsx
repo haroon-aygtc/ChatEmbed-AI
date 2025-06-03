@@ -8,6 +8,8 @@ import { IntegrationSection } from "@/components/sections/integration-section";
 import { TestimonialsSection } from "@/components/sections/testimonials-section";
 import { PricingSection } from "@/components/sections/pricing-section";
 import { CTASection } from "@/components/sections/cta-section";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -23,6 +25,16 @@ export default function Home() {
         <CTASection />
       </main>
       <Footer />
+
+      {/* Authentication Button */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <Link href="/auth/login">
+          <Button size="lg" className="shadow-lg">
+            Sign In
+          </Button>
+        </Link>
+      </div>
+
       <div className="w-[800px] h-[600px]"></div>
     </div>
   );
