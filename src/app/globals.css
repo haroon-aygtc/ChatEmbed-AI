@@ -2,6 +2,546 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-slide-in {
+  animation: slide-in 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+/* Whiteboard Animation Keyframes */
+@keyframes draw-circle {
+  from {
+    stroke-dasharray: 0 100;
+    opacity: 0;
+  }
+  to {
+    stroke-dasharray: 100 0;
+    opacity: 1;
+  }
+}
+
+@keyframes draw-line {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 1rem;
+    opacity: 1;
+  }
+}
+
+@keyframes draw-arrow {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes draw-rect {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes type-text {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drawing-hand {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(-4px, -2px) rotate(-5deg);
+  }
+  50% {
+    transform: translate(2px, -4px) rotate(3deg);
+  }
+  75% {
+    transform: translate(-2px, 2px) rotate(-2deg);
+  }
+}
+
+@keyframes robot-movement {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-3px) rotate(0.5deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-3px) rotate(-0.5deg);
+  }
+}
+
+@keyframes presenter-movement {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-2px) rotate(1deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-2px) rotate(-1deg);
+  }
+}
+
+@keyframes robot-gesture-left {
+  0%,
+  100% {
+    transform: rotate(45deg);
+  }
+  25% {
+    transform: rotate(20deg);
+  }
+  50% {
+    transform: rotate(70deg);
+  }
+  75% {
+    transform: rotate(35deg);
+  }
+}
+
+@keyframes robot-gesture-right {
+  0%,
+  100% {
+    transform: rotate(-45deg);
+  }
+  25% {
+    transform: rotate(-20deg);
+  }
+  50% {
+    transform: rotate(-70deg);
+  }
+  75% {
+    transform: rotate(-35deg);
+  }
+}
+
+@keyframes gesture-left {
+  0%,
+  100% {
+    transform: rotate(45deg);
+  }
+  25% {
+    transform: rotate(30deg);
+  }
+  50% {
+    transform: rotate(60deg);
+  }
+  75% {
+    transform: rotate(40deg);
+  }
+}
+
+@keyframes gesture-right {
+  0%,
+  100% {
+    transform: rotate(-45deg);
+  }
+  25% {
+    transform: rotate(-30deg);
+  }
+  50% {
+    transform: rotate(-60deg);
+  }
+  75% {
+    transform: rotate(-40deg);
+  }
+}
+
+@keyframes robot-point-left {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(-3px) rotate(-15deg);
+  }
+}
+
+@keyframes robot-point-right {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(3px) rotate(15deg);
+  }
+}
+
+@keyframes point-left {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(-2px) rotate(-10deg);
+  }
+}
+
+@keyframes point-right {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(2px) rotate(10deg);
+  }
+}
+
+@keyframes robot-blink {
+  0%,
+  85%,
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  90% {
+    opacity: 0.3;
+    transform: scaleY(0.2);
+  }
+}
+
+@keyframes blink {
+  0%,
+  90%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes robot-speaking {
+  0%,
+  100% {
+    transform: scaleY(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scaleY(1.5);
+    opacity: 1;
+  }
+}
+
+@keyframes speaking {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.8) scaleX(1.1);
+  }
+}
+
+@keyframes robot-pointer {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  16% {
+    transform: translate(-10px, -6px) rotate(-20deg);
+  }
+  32% {
+    transform: translate(6px, -10px) rotate(15deg);
+  }
+  48% {
+    transform: translate(-4px, 6px) rotate(-10deg);
+  }
+  64% {
+    transform: translate(8px, -4px) rotate(12deg);
+  }
+  80% {
+    transform: translate(-6px, 8px) rotate(-8deg);
+  }
+}
+
+@keyframes presenter-pointer {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  20% {
+    transform: translate(-8px, -4px) rotate(-15deg);
+  }
+  40% {
+    transform: translate(4px, -8px) rotate(10deg);
+  }
+  60% {
+    transform: translate(-2px, 4px) rotate(-5deg);
+  }
+  80% {
+    transform: translate(6px, -2px) rotate(8deg);
+  }
+}
+
+@keyframes sequential-appear {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes robot-speech-1 {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.8);
+  }
+  10%,
+  30% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.8);
+  }
+}
+
+@keyframes robot-speech-2 {
+  0%,
+  60% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.8);
+  }
+  70%,
+  90% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.8);
+  }
+}
+
+@keyframes robot-speech-3 {
+  0%,
+  70% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.8);
+  }
+  80%,
+  95% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.8);
+  }
+}
+
+@keyframes robot-speech-4 {
+  0%,
+  80% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.8);
+  }
+  85%,
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes speech-bubble {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.8);
+  }
+  10%,
+  90% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.8);
+  }
+}
+
+/* Animation Classes */
+.animate-draw-circle {
+  animation: draw-circle 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-draw-line {
+  animation: draw-line 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-draw-arrow {
+  animation: draw-arrow 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-draw-rect {
+  animation: draw-rect 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-type-text {
+  animation: type-text 1s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-drawing-hand {
+  animation: drawing-hand 6s ease-in-out infinite;
+}
+
+.animate-robot-movement {
+  animation: robot-movement 10s ease-in-out infinite;
+}
+
+.animate-presenter-movement {
+  animation: presenter-movement 8s ease-in-out infinite;
+}
+
+.animate-robot-gesture-left {
+  animation: robot-gesture-left 5s ease-in-out infinite;
+}
+
+.animate-robot-gesture-right {
+  animation: robot-gesture-right 5s ease-in-out infinite;
+}
+
+.animate-gesture-left {
+  animation: gesture-left 4s ease-in-out infinite;
+}
+
+.animate-gesture-right {
+  animation: gesture-right 4s ease-in-out infinite;
+}
+
+.animate-robot-point-left {
+  animation: robot-point-left 4s ease-in-out infinite;
+}
+
+.animate-robot-point-right {
+  animation: robot-point-right 4s ease-in-out infinite;
+}
+
+.animate-point-left {
+  animation: point-left 3s ease-in-out infinite;
+}
+
+.animate-point-right {
+  animation: point-right 3s ease-in-out infinite;
+}
+
+.animate-robot-blink {
+  animation: robot-blink 3s ease-in-out infinite;
+}
+
+.animate-blink {
+  animation: blink 4s ease-in-out infinite;
+}
+
+.animate-robot-speaking {
+  animation: robot-speaking 1.5s ease-in-out infinite;
+}
+
+.animate-speaking {
+  animation: speaking 2s ease-in-out infinite;
+}
+
+.animate-robot-pointer {
+  animation: robot-pointer 15s ease-in-out infinite;
+}
+
+.animate-presenter-pointer {
+  animation: presenter-pointer 12s ease-in-out infinite;
+}
+
+.animate-sequential-appear {
+  animation: sequential-appear 1s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-robot-speech-1 {
+  animation: robot-speech-1 25s ease-in-out infinite;
+}
+
+.animate-robot-speech-2 {
+  animation: robot-speech-2 25s ease-in-out infinite;
+}
+
+.animate-robot-speech-3 {
+  animation: robot-speech-3 25s ease-in-out infinite;
+}
+
+.animate-robot-speech-4 {
+  animation: robot-speech-4 25s ease-in-out infinite;
+}
+
+.animate-speech-bubble {
+  animation: speech-bubble 8s ease-in-out infinite;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

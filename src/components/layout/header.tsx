@@ -3,7 +3,14 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ThemeSwitcher } from "@/components/theme-switcher";
-import { MessageSquare, Menu, X } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { MessageSquare, Menu, X, User, UserPlus, LogIn } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -51,9 +58,34 @@ export function Header({ className }: HeaderProps) {
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center space-x-4">
           <ThemeSwitcher />
-          <Button variant="ghost" size="sm">
-            Sign In
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm" className="gap-2">
+                <User className="h-4 w-4" />
+                Account
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuItem asChild>
+                <Link
+                  href="/auth/login"
+                  className="flex items-center gap-2 cursor-pointer"
+                >
+                  <LogIn className="h-4 w-4" />
+                  Sign In
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link
+                  href="/auth/register"
+                  className="flex items-center gap-2 cursor-pointer"
+                >
+                  <UserPlus className="h-4 w-4" />
+                  Create Account
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Button size="sm">Get Started</Button>
         </div>
 
@@ -89,9 +121,28 @@ export function Header({ className }: HeaderProps) {
               </Link>
             ))}
             <div className="flex flex-col space-y-2 pt-4 border-t">
-              <Button variant="ghost" size="sm" className="justify-start">
-                Sign In
-              </Button>
+              <Link href="/auth/login">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="justify-start w-full gap-2"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <LogIn className="h-4 w-4" />
+                  Sign In
+                </Button>
+              </Link>
+              <Link href="/auth/register">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="justify-start w-full gap-2"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <UserPlus className="h-4 w-4" />
+                  Create Account
+                </Button>
+              </Link>
               <Button size="sm">Get Started</Button>
             </div>
           </div>
