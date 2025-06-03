@@ -35,6 +35,15 @@ export default function Home() {
         </Link>
       </div>
 
+      {/* Admin Panel Button */}
+      <div className="fixed bottom-6 left-6 z-50">
+        <Link href="/admin">
+          <Button size="lg" variant="outline" className="shadow-lg">
+            Admin Panel
+          </Button>
+        </Link>
+      </div>
+
       <div className="w-[800px] h-[600px]"></div>
     </div>
   );
