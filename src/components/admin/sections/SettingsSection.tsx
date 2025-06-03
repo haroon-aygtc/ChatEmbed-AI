@@ -146,17 +146,17 @@ export function SettingsSection() {
       case "connected":
       case "active":
       case "healthy":
-        return "bg-green-100 text-green-800";
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100";
       case "warning":
       case "partial":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100";
       case "disconnected":
       case "inactive":
       case "error":
       case "critical":
-        return "bg-red-100 text-red-800";
+        return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100";
     }
   };
 
@@ -190,7 +190,7 @@ export function SettingsSection() {
   };
 
   return (
-    <div className="space-y-6 bg-white">
+    <div className="space-y-6">
       <div className="flex items-center gap-2">
         <Settings className="h-6 w-6" />
         <h2 className="text-2xl font-bold">System Settings</h2>

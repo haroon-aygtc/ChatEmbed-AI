@@ -445,7 +445,7 @@ export function AdminLayout({
         {/* Main Content */}
         <div className="flex flex-1 flex-col min-h-0">
           {/* Enhanced Header */}
-          <header className="flex-shrink-0 flex h-20 items-center justify-between border-b-2 border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950 px-8 py-4 shadow-md z-10">
+          <header className="flex-shrink-0 flex h-20 items-center justify-between border-b-2 border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950 px-8 py-4 shadow-md z-20 sticky top-0">
             <div className="flex items-center space-x-8">
               {/* Breadcrumbs */}
               <Breadcrumb>
