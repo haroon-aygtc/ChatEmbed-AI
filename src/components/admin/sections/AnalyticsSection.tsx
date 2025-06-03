@@ -460,7 +460,7 @@ export function AnalyticsSection() {
               <CardContent>
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm">< 1 second</span>
+                    <span className="text-sm"> 1 second</span>
                     <div className="flex items-center space-x-2">
                       <div className="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                         <div className="bg-green-500 h-2 rounded-full" style={{ width: '65%' }} />
@@ -487,7 +487,7 @@ export function AnalyticsSection() {
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm">> 5 seconds</span>
+                    <span className="text-sm">5 seconds</span>
                     <div className="flex items-center space-x-2">
                       <div className="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                         <div className="bg-red-500 h-2 rounded-full" style={{ width: '2%' }} />
