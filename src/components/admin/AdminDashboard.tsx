@@ -26,7 +26,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { AdminLayout } from "@/components/layout/admin-layout";
 import {
   AlertCircle,
   BarChart3,
@@ -129,12 +128,93 @@ export default function AdminDashboard({
   const [selectedModel, setSelectedModel] = useState("gemini-pro");
 
   return (
-    <AdminLayout
-      title="Dashboard"
-      description="Manage your AI chat widget and configuration"
-    >
-      <div className="space-y-6">
-        <Tabs
+    <div className="flex flex-col min-h-screen bg-background">
+      <header className="border-b bg-card">
+        <div className="container flex items-center justify-between h-16 px-4">
+          <div className="flex items-center gap-2">
+            <MessageSquare className="h-6 w-6 text-primary" />
+            <h1 className="text-xl font-semibold">Chat Admin</h1>
+          </div>
+          <div className="flex items-center gap-4">
+            <Button variant="outline" size="sm">
+              <HelpCircle className="h-4 w-4 mr-2" />
+              Help
+            </Button>
+            <Avatar className="h-8 w-8">
+              <AvatarImage
+                src="https://api.dicebear.com/7.x/avataaars/svg?seed=admin"
+                alt="Admin"
+              />
+              <AvatarFallback>AD</AvatarFallback>
+            </Avatar>
+          </div>
+        </div>
+      </header>
+
+      <div className="flex flex-1 container px-4 py-6">
+        <aside className="w-56 mr-8 hidden md:block">
+          <nav className="space-y-1">
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+              onClick={() => setActiveTab("overview")}
+            >
+              <Layout className="h-4 w-4 mr-2" />
+              Overview
+            </Button>
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+              onClick={() => setActiveTab("widget")}
+            >
+              <Code className="h-4 w-4 mr-2" />
+              Widget Config
+            </Button>
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+              onClick={() => setActiveTab("ai-models")}
+            >
+              <Settings className="h-4 w-4 mr-2" />
+              AI Models
+            </Button>
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+              onClick={() => setActiveTab("knowledge-base")}
+            >
+              <Book className="h-4 w-4 mr-2" />
+              Knowledge Base
+            </Button>
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+              onClick={() => setActiveTab("prompt-flow")}
+            >
+              <FileText className="h-4 w-4 mr-2" />
+              Prompt Flow
+            </Button>
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+              onClick={() => setActiveTab("analytics")}
+            >
+              <BarChart3 className="h-4 w-4 mr-2" />
+              Analytics
+            </Button>
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+              onClick={() => setActiveTab("settings")}
+            >
+              <Cog className="h-4 w-4 mr-2" />
+              Settings
+            </Button>
+          </nav>
+        </aside>
+
+        <main className="flex-1">
+          <Tabs
             value={activeTab}
             onValueChange={setActiveTab}
             className="w-full"
