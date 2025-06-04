@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
+import * as api from "@/lib/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import Link from "next/link";
@@ -94,20 +95,59 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
     try {
       if (onSubmit) {
         await onSubmit(data);
+        return;
+      }
+
+      if (type === "login") {
+        const user = await api.login({
+          email: data.email,
+          password: data.password,
+        });
+        toast({ title: "Success!", description: `Welcome back, ${user.name}!` });
+      } else if (type === "register") {
+        await api.register({
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          password_confirmation: data.confirmPassword,
+        });
+        toast({
+          title: "Account Created",
+          description: "Your account has been created successfully.",
+        });
       } else {
-        // Default behavior - show success toast
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API call
         toast({
           title: "Success!",
           description: getSuccessMessage(),
         });
       }
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Something went wrong. Please try again.",
-        variant: "destructive",
-      });
+    } catch (err: any) {
+      if (err?.errors) {
+        const fieldNames: Record<string, string> = {
+          name: "Full Name",
+          email: "Email",
+          password: "Password",
+          password_confirmation: "Confirm Password",
+        };
+        const messages: string[] = [];
+        Object.entries(err.errors).forEach(([field, msgs]) => {
+          const formField =
+            field === "password_confirmation" ? "confirmPassword" : field;
+          form.setError(formField as any, { message: msgs[0] });
+          messages.push(`${fieldNames[field] || field}: ${msgs[0]}`);
+        });
+        toast({
+          title: "Validation Error",
+          description: messages.join("\n"),
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: err.message || "Something went wrong.",
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsLoading(false);
     }
