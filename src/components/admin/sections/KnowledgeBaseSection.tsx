@@ -854,7 +854,22 @@ export function KnowledgeBaseSection() {
         <TabsContent value="upload" className="space-y-6">
           <div className="grid gap-6 lg:grid-cols-2">
             <div className="space-y-6">
-              <FileUploader />
+              <FileUploader
+                onFilesProcessed={(docs) => {
+                  // Update documents list
+                  const newDocs = docs.map((doc, index) => ({
+                    id: `doc-${Date.now()}-${index}`,
+                    title: doc.metadata.title,
+                    type: doc.metadata.type.toUpperCase(),
+                    size: `${Math.round(doc.metadata.size / 1024)} KB`,
+                    status: "indexed" as const,
+                    tags: ["uploaded"],
+                    uploadedAt: new Date().toISOString().split("T")[0],
+                    wordCount: doc.metadata.wordCount,
+                  }));
+                  setDocuments((prev) => [...prev, ...newDocs]);
+                }}
+              />
 
               <Card>
                 <CardHeader>

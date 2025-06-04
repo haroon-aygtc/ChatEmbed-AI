@@ -362,69 +362,92 @@ function FlowBuilder({
           </CardContent>
         </Card>
 
-        {/* Flow Nodes */}
+        {/* Visual Flow Editor */}
         <Card>
           <CardHeader>
-            <CardTitle>Flow Nodes ({editingFlow.nodes.length})</CardTitle>
+            <CardTitle>Visual Flow Editor</CardTitle>
+            <CardDescription>
+              Drag and connect nodes to build your conversation flow
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            <ScrollArea className="h-[400px]">
-              <div className="space-y-3">
-                {editingFlow.nodes.map((node) => {
-                  const nodeType = nodeTypes.find((t) => t.value === node.type);
-                  const Icon = nodeType?.icon || MessageSquare;
-                  return (
-                    <div
-                      key={node.id}
-                      className="border rounded-lg p-3 space-y-2"
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <Icon className="h-4 w-4" />
-                          <Badge
-                            variant="secondary"
-                            className={nodeType?.color}
-                          >
-                            {nodeType?.label}
-                          </Badge>
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => deleteNode(node.id)}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                      <Input
-                        value={node.title}
-                        onChange={(e) =>
-                          updateNode(node.id, { title: e.target.value })
-                        }
-                        placeholder="Node title"
-                      />
-                      <Textarea
-                        value={node.content}
-                        onChange={(e) =>
-                          updateNode(node.id, { content: e.target.value })
-                        }
-                        placeholder="Node content"
-                        rows={2}
-                      />
-                    </div>
-                  );
-                })}
-                {editingFlow.nodes.length === 0 && (
-                  <div className="text-center py-8 text-muted-foreground">
-                    <FileText className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                    <p>No nodes added yet</p>
-                    <p className="text-sm">Add nodes to build your flow</p>
-                  </div>
-                )}
-              </div>
-            </ScrollArea>
+            <div className="h-[500px] border rounded-lg">
+              <ReactFlow
+                nodes={nodes}
+                edges={edges}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                onConnect={onConnect}
+                onNodeClick={onNodeClick}
+                connectionMode={ConnectionMode.Loose}
+                fitView
+              >
+                <Background />
+                <Controls />
+                <MiniMap />
+              </ReactFlow>
+            </div>
           </CardContent>
         </Card>
+      </div>
+
+      {/* Node Properties Panel */}
+      {selectedNode && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Node Properties</CardTitle>
+            <CardDescription>
+              Configure the selected node
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label>Node Title</Label>
+              <Input
+                value={selectedNode.title}
+                onChange={(e) =>
+                  updateNode(selectedNode.id, { title: e.target.value })
+                }
+                placeholder="Node title"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label>Node Type</Label>
+              <Select
+                value={selectedNode.type}
+                onValueChange={(value) =>
+                  updateNode(selectedNode.id, { type: value as AgentNode['type'] })
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {nodeTypes.map((nodeType) => (
+                    <SelectItem key={nodeType.value} value={nodeType.value}>
+                      {nodeType.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="space-y-2">
+              <Label>Content</Label>
+              <Textarea
+                value={selectedNode.content}
+                onChange={(e) =>
+                  updateNode(selectedNode.id, { content: e.target.value })
+                }
+                placeholder="Node content or configuration"
+                rows={4}
+              />
+            </div>
+            
+            {selectedNode.type === 'condition' && (
+              <div className="space-y-2">
+                <Label>Condition Logic</Label>
       </div>
     </div>
   );
