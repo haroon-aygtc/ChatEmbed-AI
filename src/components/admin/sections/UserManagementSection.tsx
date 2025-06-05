@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -54,6 +54,20 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/use-toast";
 import {
+  getUsers,
+  createUser,
+  updateUser,
+  deleteUser,
+  getRoles,
+  createRole,
+  updateRole,
+  deleteRole,
+  getPermissions,
+  createPermission,
+  updatePermission,
+  deletePermission,
+} from "@/lib/api";
+import {
   Users,
   Plus,
   Edit,
@@ -103,145 +117,22 @@ interface Permission {
   isSystem: boolean;
 }
 
-const mockUsers: User[] = [
-  {
-    id: "1",
-    name: "John Doe",
-    email: "john@example.com",
-    phone: "+1234567890",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=john",
-    role: "Admin",
-    status: "active",
-    lastLogin: "2024-01-15T10:30:00Z",
-    createdAt: "2024-01-01T00:00:00Z",
-    permissions: ["user.read", "user.write", "role.read", "role.write"],
-  },
-  {
-    id: "2",
-    name: "Jane Smith",
-    email: "jane@example.com",
-    phone: "+1234567891",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=jane",
-    role: "Moderator",
-    status: "active",
-    lastLogin: "2024-01-14T15:45:00Z",
-    createdAt: "2024-01-02T00:00:00Z",
-    permissions: ["user.read", "chat.moderate"],
-  },
-  {
-    id: "3",
-    name: "Bob Wilson",
-    email: "bob@example.com",
-    role: "User",
-    status: "inactive",
-    lastLogin: "2024-01-10T09:15:00Z",
-    createdAt: "2024-01-03T00:00:00Z",
-    permissions: ["chat.read"],
-  },
-];
-
-const mockRoles: Role[] = [
-  {
-    id: "1",
-    name: "Admin",
-    description: "Full system access with all permissions",
-    permissions: [
-      "user.read",
-      "user.write",
-      "role.read",
-      "role.write",
-      "system.admin",
-    ],
-    userCount: 1,
-    isSystem: true,
-    createdAt: "2024-01-01T00:00:00Z",
-  },
-  {
-    id: "2",
-    name: "Moderator",
-    description: "Can moderate chats and manage users",
-    permissions: ["user.read", "chat.moderate", "chat.delete"],
-    userCount: 1,
-    isSystem: false,
-    createdAt: "2024-01-01T00:00:00Z",
-  },
-  {
-    id: "3",
-    name: "User",
-    description: "Basic user with chat access",
-    permissions: ["chat.read", "chat.write"],
-    userCount: 1,
-    isSystem: true,
-    createdAt: "2024-01-01T00:00:00Z",
-  },
-];
-
-const mockPermissions: Permission[] = [
-  {
-    id: "1",
-    name: "user.read",
-    description: "View user information",
-    category: "User Management",
-    isSystem: true,
-  },
-  {
-    id: "2",
-    name: "user.write",
-    description: "Create and edit users",
-    category: "User Management",
-    isSystem: true,
-  },
-  {
-    id: "3",
-    name: "role.read",
-    description: "View roles and permissions",
-    category: "Role Management",
-    isSystem: true,
-  },
-  {
-    id: "4",
-    name: "role.write",
-    description: "Create and edit roles",
-    category: "Role Management",
-    isSystem: true,
-  },
-  {
-    id: "5",
-    name: "chat.read",
-    description: "View chat messages",
-    category: "Chat",
-    isSystem: true,
-  },
-  {
-    id: "6",
-    name: "chat.write",
-    description: "Send chat messages",
-    category: "Chat",
-    isSystem: true,
-  },
-  {
-    id: "7",
-    name: "chat.moderate",
-    description: "Moderate chat conversations",
-    category: "Chat",
-    isSystem: false,
-  },
-  {
-    id: "8",
-    name: "system.admin",
-    description: "Full system administration",
-    category: "System",
-    isSystem: true,
-  },
-];
 
 function UserManagement() {
-  const [users, setUsers] = useState<User[]>(mockUsers);
+  const [users, setUsers] = useState<User[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+
+  useEffect(() => {
+    getUsers()
+      .then(setUsers)
+      .catch(() =>
+        toast({ title: "Error", description: "Failed to load users", variant: "destructive" })
+      );
+  }, []);
 
   const filteredUsers = users.filter((user) => {
     const matchesSearch =
@@ -265,64 +156,66 @@ function UserManagement() {
     }
   };
 
-  const handleCreateUser = (userData: Partial<User>) => {
-    const newUser: User = {
-      id: Date.now().toString(),
-      name: userData.name || "",
-      email: userData.email || "",
-      phone: userData.phone,
-      role: userData.role || "User",
-      status: "active",
-      createdAt: new Date().toISOString(),
-      permissions: [],
-    };
-    setUsers([...users, newUser]);
-    setIsCreateDialogOpen(false);
-    toast({
-      title: "User Created",
-      description: `${newUser.name} has been created successfully.`,
-    });
+  const handleCreateUser = async (userData: Partial<User>) => {
+    try {
+      const newUser = await createUser(userData);
+      setUsers([...users, newUser]);
+      setIsCreateDialogOpen(false);
+      toast({
+        title: "User Created",
+        description: `${newUser.name} has been created successfully.`,
+      });
+    } catch (e) {
+      toast({ title: "Error", description: "Failed to create user", variant: "destructive" });
+    }
   };
 
-  const handleUpdateUser = (userData: Partial<User>) => {
+  const handleUpdateUser = async (userData: Partial<User>) => {
     if (!selectedUser) return;
-    const updatedUsers = users.map((user) =>
-      user.id === selectedUser.id ? { ...user, ...userData } : user,
-    );
-    setUsers(updatedUsers);
-    setIsEditDialogOpen(false);
-    setSelectedUser(null);
-    toast({
-      title: "User Updated",
-      description: "User information has been updated successfully.",
-    });
+    try {
+      const updated = await updateUser(selectedUser.id, userData);
+      const updatedUsers = users.map((user) =>
+        user.id === selectedUser.id ? updated : user,
+      );
+      setUsers(updatedUsers);
+      setIsEditDialogOpen(false);
+      setSelectedUser(null);
+      toast({
+        title: "User Updated",
+        description: "User information has been updated successfully.",
+      });
+    } catch (e) {
+      toast({ title: "Error", description: "Failed to update user", variant: "destructive" });
+    }
   };
 
-  const handleDeleteUser = (userId: string) => {
-    setUsers(users.filter((user) => user.id !== userId));
-    toast({
-      title: "User Deleted",
-      description: "User has been deleted successfully.",
-    });
+  const handleDeleteUser = async (userId: string) => {
+    try {
+      await deleteUser(userId);
+      setUsers(users.filter((user) => user.id !== userId));
+      toast({
+        title: "User Deleted",
+        description: "User has been deleted successfully.",
+      });
+    } catch (e) {
+      toast({ title: "Error", description: "Failed to delete user", variant: "destructive" });
+    }
   };
 
-  const handleToggleUserStatus = (userId: string) => {
-    const updatedUsers = users.map((user) =>
-      user.id === userId
-        ? {
-            ...user,
-            status:
-              user.status === "active"
-                ? "inactive"
-                : ("active" as "active" | "inactive" | "suspended"),
-          }
-        : user,
-    );
-    setUsers(updatedUsers);
-    toast({
-      title: "Status Updated",
-      description: "User status has been updated successfully.",
-    });
+  const handleToggleUserStatus = async (userId: string) => {
+    const user = users.find((u) => u.id === userId);
+    if (!user) return;
+    const newStatus = user.status === "active" ? "inactive" : "active";
+    try {
+      const updated = await updateUser(userId, { status: newStatus });
+      setUsers(users.map((u) => (u.id === userId ? updated : u)));
+      toast({
+        title: "Status Updated",
+        description: "User status has been updated successfully.",
+      });
+    } catch (e) {
+      toast({ title: "Error", description: "Failed to update status", variant: "destructive" });
+    }
   };
 
   return (
@@ -796,44 +689,50 @@ function UserForm({
 }
 
 function RoleManagement() {
-  const [roles, setRoles] = useState<Role[]>(mockRoles);
+  const [roles, setRoles] = useState<Role[]>([]);
   const [selectedRole, setSelectedRole] = useState<Role | null>(null);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
-  const handleCreateRole = (roleData: Partial<Role>) => {
-    const newRole: Role = {
-      id: Date.now().toString(),
-      name: roleData.name || "",
-      description: roleData.description || "",
-      permissions: roleData.permissions || [],
-      userCount: 0,
-      isSystem: false,
-      createdAt: new Date().toISOString(),
-    };
-    setRoles([...roles, newRole]);
-    setIsCreateDialogOpen(false);
-    toast({
-      title: "Role Created",
-      description: `${newRole.name} role has been created successfully.`,
-    });
+  useEffect(() => {
+    getRoles()
+      .then(setRoles)
+      .catch(() =>
+        toast({ title: "Error", description: "Failed to load roles", variant: "destructive" })
+      );
+  }, []);
+
+  const handleCreateRole = async (roleData: Partial<Role>) => {
+    try {
+      const newRole = await createRole(roleData);
+      setRoles([...roles, newRole]);
+      setIsCreateDialogOpen(false);
+      toast({
+        title: "Role Created",
+        description: `${newRole.name} role has been created successfully.`,
+      });
+    } catch (e) {
+      toast({ title: "Error", description: "Failed to create role", variant: "destructive" });
+    }
   };
 
-  const handleUpdateRole = (roleData: Partial<Role>) => {
+  const handleUpdateRole = async (roleData: Partial<Role>) => {
     if (!selectedRole) return;
-    const updatedRoles = roles.map((role) =>
-      role.id === selectedRole.id ? { ...role, ...roleData } : role,
-    );
-    setRoles(updatedRoles);
-    setIsEditDialogOpen(false);
-    setSelectedRole(null);
-    toast({
-      title: "Role Updated",
-      description: "Role has been updated successfully.",
-    });
+    try {
+      const updated = await updateRole(selectedRole.id, roleData);
+      setRoles(roles.map((r) => (r.id === selectedRole.id ? updated : r)));
+      setIsEditDialogOpen(false);
+      setSelectedRole(null);
+      toast({
+        title: "Role Updated",
+        description: "Role has been updated successfully.",
+      });
+    } catch (e) {
+      toast({ title: "Error", description: "Failed to update role", variant: "destructive" });
+    }
   };
 
-  const handleDeleteRole = (roleId: string) => {
+  const handleDeleteRole = async (roleId: string) => {
     const role = roles.find((r) => r.id === roleId);
     if (role?.isSystem) {
       toast({
@@ -843,11 +742,16 @@ function RoleManagement() {
       });
       return;
     }
-    setRoles(roles.filter((role) => role.id !== roleId));
-    toast({
-      title: "Role Deleted",
-      description: "Role has been deleted successfully.",
-    });
+    try {
+      await deleteRole(roleId);
+      setRoles(roles.filter((role) => role.id !== roleId));
+      toast({
+        title: "Role Deleted",
+        description: "Role has been deleted successfully.",
+      });
+    } catch (e) {
+      toast({ title: "Error", description: "Failed to delete role", variant: "destructive" });
+    }
   };
 
   return (
@@ -1050,6 +954,15 @@ function RoleForm({
     description: role?.description || "",
     permissions: role?.permissions || [],
   });
+  const [permissions, setPermissions] = useState<Permission[]>([]);
+
+  useEffect(() => {
+    getPermissions()
+      .then(setPermissions)
+      .catch(() =>
+        toast({ title: "Error", description: "Failed to load permissions", variant: "destructive" })
+      );
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -1063,7 +976,7 @@ function RoleForm({
     setFormData({ ...formData, permissions: updatedPermissions });
   };
 
-  const permissionsByCategory = mockPermissions.reduce(
+  const permissionsByCategory = permissions.reduce(
     (acc, permission) => {
       if (!acc[permission.category]) {
         acc[permission.category] = [];
@@ -1153,13 +1066,21 @@ function RoleForm({
 }
 
 function PermissionManagement() {
-  const [permissions, setPermissions] = useState<Permission[]>(mockPermissions);
+  const [permissions, setPermissions] = useState<Permission[]>([]);
   const [selectedPermission, setSelectedPermission] =
     useState<Permission | null>(null);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
+
+  useEffect(() => {
+    getPermissions()
+      .then(setPermissions)
+      .catch(() =>
+        toast({ title: "Error", description: "Failed to load permissions", variant: "destructive" })
+      );
+  }, []);
 
   const filteredPermissions = permissions.filter((permission) => {
     const matchesSearch =
@@ -1172,39 +1093,39 @@ function PermissionManagement() {
 
   const categories = Array.from(new Set(permissions.map((p) => p.category)));
 
-  const handleCreatePermission = (permissionData: Partial<Permission>) => {
-    const newPermission: Permission = {
-      id: Date.now().toString(),
-      name: permissionData.name || "",
-      description: permissionData.description || "",
-      category: permissionData.category || "Custom",
-      isSystem: false,
-    };
-    setPermissions([...permissions, newPermission]);
-    setIsCreateDialogOpen(false);
-    toast({
-      title: "Permission Created",
-      description: `${newPermission.name} permission has been created successfully.`,
-    });
+  const handleCreatePermission = async (permissionData: Partial<Permission>) => {
+    try {
+      const newPermission = await createPermission(permissionData);
+      setPermissions([...permissions, newPermission]);
+      setIsCreateDialogOpen(false);
+      toast({
+        title: "Permission Created",
+        description: `${newPermission.name} permission has been created successfully.`,
+      });
+    } catch (e) {
+      toast({ title: "Error", description: "Failed to create permission", variant: "destructive" });
+    }
   };
 
-  const handleUpdatePermission = (permissionData: Partial<Permission>) => {
+  const handleUpdatePermission = async (permissionData: Partial<Permission>) => {
     if (!selectedPermission) return;
-    const updatedPermissions = permissions.map((permission) =>
-      permission.id === selectedPermission.id
-        ? { ...permission, ...permissionData }
-        : permission,
-    );
-    setPermissions(updatedPermissions);
-    setIsEditDialogOpen(false);
-    setSelectedPermission(null);
-    toast({
-      title: "Permission Updated",
-      description: "Permission has been updated successfully.",
-    });
+    try {
+      const updated = await updatePermission(selectedPermission.id, permissionData);
+      setPermissions(
+        permissions.map((p) => (p.id === selectedPermission.id ? updated : p)),
+      );
+      setIsEditDialogOpen(false);
+      setSelectedPermission(null);
+      toast({
+        title: "Permission Updated",
+        description: "Permission has been updated successfully.",
+      });
+    } catch (e) {
+      toast({ title: "Error", description: "Failed to update permission", variant: "destructive" });
+    }
   };
 
-  const handleDeletePermission = (permissionId: string) => {
+  const handleDeletePermission = async (permissionId: string) => {
     const permission = permissions.find((p) => p.id === permissionId);
     if (permission?.isSystem) {
       toast({
@@ -1214,13 +1135,16 @@ function PermissionManagement() {
       });
       return;
     }
-    setPermissions(
-      permissions.filter((permission) => permission.id !== permissionId),
-    );
-    toast({
-      title: "Permission Deleted",
-      description: "Permission has been deleted successfully.",
-    });
+    try {
+      await deletePermission(permissionId);
+      setPermissions(permissions.filter((permission) => permission.id !== permissionId));
+      toast({
+        title: "Permission Deleted",
+        description: "Permission has been deleted successfully.",
+      });
+    } catch (e) {
+      toast({ title: "Error", description: "Failed to delete permission", variant: "destructive" });
+    }
   };
 
   return (
