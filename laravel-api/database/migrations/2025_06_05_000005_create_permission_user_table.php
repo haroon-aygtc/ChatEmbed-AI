@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Creates the `permission_user` pivot table to establish a many-to-many relationship between permissions and users.
+     *
+     * The table includes foreign keys to the `permissions` and `users` tables with cascading deletes, and uses a composite primary key on both columns.
+     */
     public function up(): void
     {
         Schema::create('permission_user', function (Blueprint $table) {
@@ -15,6 +20,9 @@ return new class extends Migration
         });
     }
 
+    /**
+     * Drops the `permission_user` table if it exists, reversing the migration.
+     */
     public function down(): void
     {
         Schema::dropIfExists('permission_user');

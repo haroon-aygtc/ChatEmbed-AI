@@ -35,10 +35,10 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
+    /****
+     * Returns the attribute casting rules for the model.
      *
-     * @return array<string, string>
+     * @return array<string, string> An associative array mapping attribute names to their cast types.
      */
     protected function casts(): array
     {
@@ -48,11 +48,21 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * Defines the many-to-many relationship between the user and roles.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function roles()
     {
         return $this->belongsToMany(Role::class);
     }
 
+    /**
+     * Defines the many-to-many relationship between the user and permissions.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function permissions()
     {
         return $this->belongsToMany(Permission::class);

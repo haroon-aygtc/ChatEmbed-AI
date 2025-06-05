@@ -17,11 +17,21 @@ class Permission extends Model
         'is_system',
     ];
 
+    /**
+     * Defines a many-to-many relationship between permissions and users.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function users()
     {
         return $this->belongsToMany(User::class);
     }
 
+    /****
+     * Defines a many-to-many relationship between permissions and roles.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function roles()
     {
         return $this->belongsToMany(Role::class);
