@@ -6,6 +6,7 @@ use App\Http\Controllers\TenantController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\UserController;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 
 Route::get('/user', function (Request $request) {
@@ -20,6 +21,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 Route::apiResource('tenants', TenantController::class);
 Route::apiResource('roles', RoleController::class);
 Route::apiResource('permissions', PermissionController::class);
+Route::apiResource('users', UserController::class)->middleware('auth:sanctum');
 
 Route::post('/roles/{role}/permissions/{permission}', [RoleController::class, 'assignPermission']);
 Route::delete('/roles/{role}/permissions/{permission}', [RoleController::class, 'removePermission']);
