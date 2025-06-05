@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Creates the 'roles' table with columns for id, name, description, is_system, and timestamps.
+     *
+     * The table includes an auto-incrementing primary key, a required name, an optional description, a boolean flag for system roles (defaulting to false), and created/updated timestamps.
      */
     public function up(): void
     {
@@ -20,8 +22,8 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
+    /****
+     * Drops the 'roles' table if it exists, reversing the migration.
      */
     public function down(): void
     {
